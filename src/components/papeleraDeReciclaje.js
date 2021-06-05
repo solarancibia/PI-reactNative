@@ -24,7 +24,18 @@ export  class PapeleraDeReciclaje extends Component{
 }
 
 
+async removeTodos (key){
+    try{
 
+        await Asyncstorage.removeItem(key)
+        
+      
+          this.setState({contactosBorrados:  [] })
+        } catch(error){
+        console.log(error);
+      }
+    
+}
 
   async getBorrados () {
    
@@ -47,9 +58,23 @@ export  class PapeleraDeReciclaje extends Component{
      console.log(error);
    }
  }
- async removeItem(key){
+ async removeItem(value){
     try{
-      await Asyncstorage.removeItem(key)
+
+      //  await Asyncstorage.removeItem(key)
+
+        let resultado = this.state.contactosBorrados.filter ((item) => {
+            return item.login.uuid !== value.login.uuid
+          })
+      
+          this.setState({contactosBorrados:resultado})
+    
+          const jsonValue = JSON.stringify(resultado)
+        await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
+
+
+
+
     } catch(error){
       console.log(error);
     }
@@ -90,7 +115,7 @@ export  class PapeleraDeReciclaje extends Component{
                             </TouchableOpacity>
 
                             
-                            <TouchableOpacity onPress= {()=> this.removeItem("@misContactosBorrados")}>
+                            <TouchableOpacity onPress= {()=> this.removeItem(item)}>
                            
                            <Text> borrar! </Text>
                           
@@ -113,7 +138,11 @@ export  class PapeleraDeReciclaje extends Component{
         
 
          
-       
+        <TouchableOpacity onPress= {()=> this.removeTodos("@misContactosBorrados")}>
+                           
+                           <Text> Borrar todos! </Text>
+                          
+                           </TouchableOpacity>
 
 
 

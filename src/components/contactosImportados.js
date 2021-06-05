@@ -26,14 +26,65 @@ export  class ContactosImportados extends Component{
    
 }
 
-borrar(value){
+
+ async borrar(value){
+
+    try{
+        const id = value.login.uuid
+        
+
+        if (this.state.contactosBorrados.map(x => x.login.uuid).indexOf(id)===-1) {
+            alert("El contacto se mando a la papelera de reciclaje")
+        
+                this.state.contactosBorrados.push(value)
+                const borrados = JSON.stringify(this.state.contactosBorrados)
+                await Asyncstorage.setItem( "@misContactosBorrados" , borrados)
+
+                let resultado = this.state.misContactos.filter ((item) => {
+                    return item.login.uuid !== value.login.uuid
+                  })
+              
+              this.setState({misContactos:resultado})
+              const jsonValue = JSON.stringify(resultado)
+                await Asyncstorage.setItem( "@myContacts" , jsonValue)
+
+         
+            }
+       /*   else {
+            
+            alert("El contacto se removio de la papelera de reciclaje")
+            
+            
+            this.state.contactosBorrados.splice(this.state.contactosBorrados.indexOf(value.login.uuid),1)
+           
+            const jsonValue = JSON.stringify(this.state.contactosBorrados)
+            await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
+          } */
+        
+      
+             
+          
+  
+    }catch (error){
+      console.log(error);
+    }
+
+
+
+
+
+
+
+
     
-    let resultado = this.state.misContactos.filter ((item) => {
-        return item.login.uuid !== value.login.uuid
-      })
-      console.log(resultado);
-      this.setState({misContactos:resultado})
-      };   
+   
+  
+  
+  
+  
+  
+  
+    };   
 
       searchData(text) {
       
@@ -168,9 +219,9 @@ borrar(value){
                            
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress= {()=> this.storageBorrados(item)}>
-                            <Text> Borrar! </Text>
-                            </TouchableOpacity>
+
+
+                        
 
                            
                 </View>

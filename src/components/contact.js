@@ -39,7 +39,7 @@ export  class Contact extends Component{
         
 
         if (this.state.importados.map(x => x.login.uuid).indexOf(id)===-1) {
-            alert("The selected movie has been saved in your favorite movies")
+            alert("The selected contact has been imported")
             this.state.importados.push(value)
 
             console.log(this.state.importados);
@@ -50,7 +50,7 @@ export  class Contact extends Component{
           }
           else {
             
-            alert("The selected movie has been removed from your favorite movies")
+            alert("The selected contact has been removed")
             
             
             this.state.importados.splice(this.state.importados.indexOf(value.login.uuid),1)
@@ -106,6 +106,7 @@ export  class Contact extends Component{
                             <TouchableOpacity onPress= {()=> this.storageString(item)}>
                             <Text> Guardar contacto! </Text>
                             </TouchableOpacity>
+                            
                            
                           
         <Text>     
