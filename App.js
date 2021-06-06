@@ -7,8 +7,8 @@ import {PapeleraDeReciclaje} from "./src/components/papeleraDeReciclaje"
 export default function App() {
   return (
 
- // <ContactosImportados/>
- <PapeleraDeReciclaje/>
+  <ContactosImportados/>
+ //<PapeleraDeReciclaje/>
 
    // <Contact/> 
 

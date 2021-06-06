@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput, Modal } from 'react-native';
 import {Component} from "react"
 import {getData} from "../api/RandomUsers"
 import Asyncstorage from "@react-native-async-storage/async-storage"
@@ -13,7 +13,11 @@ export  class ContactosImportados extends Component{
                 misContactos: [],
                 contactosBorrados: [],
                 text: "",
-                contactosOriginal: []
+                contactosOriginal: [],
+                showModal: false,
+                itemModal: null,
+                comentarios: " ",
+
 
     
     }
@@ -26,6 +30,9 @@ export  class ContactosImportados extends Component{
    
 }
 
+showModal (item){
+    this.setState({itemModal: item, showModal: !this.state.showModal})
+}
 
  async borrar(value){
 
@@ -178,7 +185,24 @@ export  class ContactosImportados extends Component{
     }
   }
 
+  async storageComentarios (value) {
+    try{
+       
+        var resultado = value
+    
 
+        Object.assign(resultado, 
+            {
+                comentarios: this.state.comentarios
+            
+        });
+        
+      
+    }catch (error){
+      console.log(error);
+    }
+  }
+ 
         keyExtractor = (item ,idx) => idx.toString();
         renderItem = ({item}) => {
             return (
@@ -193,26 +217,27 @@ export  class ContactosImportados extends Component{
                             <Text> {item.dob.date.substring(0,10)} - {item.dob.age} años </Text>
                           
                         
-                            <TouchableOpacity
-                                  
-                                  onPress={()=> Alert.alert(
-                                      "Edad: " + item.dob.age,
-                                       "Email: " + item.email,
-                                   /*   "Direccion: " + item.location.street.name + item.location.street.number,
-                                      "Estado: " + item.location.state + item.location.city + item.location.postcode,
-                                      "Fecha: " + item.registered.date.substring(0,10),
-                                      "Teleono: " + item.phone,
+                            <TextInput  keyboardType="default"
+                       placeholder="Ingrese algun comentario.."
+                     
+                       style={styles.estiloInput}
+                       numberOfLines={10}
+                       multiline={true}
+                      onChangeText={text=> this.setState({comentarios : text})}
+          /> 
 
-                                      */
+<TouchableOpacity onPress= {()=> this.storageComentarios(item)}>
+                           
+                           <Text> Guardar comentario </Text>
+                          
+                           </TouchableOpacity>
+                            <TouchableOpacity onPress= {()=> this.showModal(item)}>
+                           
+                           <Text> Ver  </Text>
+                          
+                           </TouchableOpacity>
 
-                                      
-                                      
-                                      )}       
-                            >
-                                <Text>Ver detalle</Text>
-                            </TouchableOpacity>
 
-                            
                             <TouchableOpacity onPress= {()=> this.borrar(item)}>
                            
                             <Text> Borrar </Text>
@@ -240,26 +265,81 @@ export  class ContactosImportados extends Component{
     <View style={styles.container}>
         
 
-         
-       
-        <TextInput  keyboardType="default"
-                      placeholder="Ingresa tu nombre"
+             <TextInput  keyboardType="default"
+                      placeholder="Filtrar por nombre"
                 
                       onChangeText={(text) => this.searchData(text) }
           /> 
 
-
-   
-   
+  
     <FlatList
                         data= {this.state.misContactos}
                         renderItem={this.renderItem}
                         keyExtractor={this.keyExtractor}
             > 
-
-
         </FlatList>
 
+        
+        
+          <Modal
+                visible= {this.state.showModal}
+                animationType= "slide"
+                transparent ={true}
+        >
+
+        <View style= {styles.modalContainer}>
+         <View style= {styles.modal}>
+
+             {      this.state.itemModal
+
+            ? 
+            <>
+        <Image style= {{width: 100, height: 100}} source={{uri: this.state.itemModal.picture.thumbnail} } />
+        <Text style= {styles.textModal}> {this.state.itemModal.name.first}</Text> 
+        <Text style= {styles.textModal}> {this.state.itemModal.name.last}</Text> 
+        <Text style= {styles.textModal}>  {this.state.itemModal.dob.date.substring(0,10)} - {this.state.itemModal.dob.age} años </Text> 
+        <Text style= {styles.textModal}> {this.state.itemModal.location.street.name} {this.state.itemModal.location.street.number } </Text> 
+        <Text style= {styles.textModal}> {this.state.itemModal.location.state} {this.state.itemModal.location.city} {this.state.itemModal.location.country} {this.state.itemModal.location.postcode} </Text> 
+        <Text style= {styles.textModal}> {this.state.itemModal.registered.date.substring(0,10)}</Text> 
+        <Text style= {styles.textModal}> {this.state.itemModal.phone}</Text>
+        <Text style= {styles.textModal}> {this.state.comentarios}</Text> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </>
+        : <Text>No hay nada</Text>
+
+    }
+        <Text style= {styles.closeButton} 
+                onPress= {() => this.setState({showModal: false})}
+        > 
+            x
+        </Text> 
+
+    </View>
+
+</View>
+</Modal>
+      
         
   </View>
 
@@ -280,8 +360,41 @@ export  class ContactosImportados extends Component{
       justifyContent: 'center',
       marginTop: 10,
     },
+    estiloInput: {
+        borderWidth: 1, 
+        borderStyle: "solid", 
+        marginTop: 20, 
+        height:50
+    },
     image: {
         height: 100,
         width: 100,
+    },
+    closeButton: {
+        fontSize: 20,
+        position: "absolute",
+        right: 20,
+        top: 10
+    },
+    textModal: {
+        fontSize: 20,
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: "flex-end",
+        alignItems: "center",
+    },
+    modal: {
+        width: "100%" ,
+        height: "70%",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "white",
+        borderTopEndRadius: 20,
+        shadowColor: "black",
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderColor: "grey",
+        elevation: 10
     }
   });

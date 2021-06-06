@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import {Component} from "react"
 import {getData} from "../api/RandomUsers"
 import Asyncstorage from "@react-native-async-storage/async-storage"
@@ -11,6 +11,9 @@ export  class Contact extends Component{
                 contactos: [],
                 apiImportada: [],
                 importados: [],
+                activity: false,
+                numeroDePersonas: " ",
+                numeroDeImportados: "0"
 
     
     }
@@ -19,7 +22,7 @@ export  class Contact extends Component{
   
  async storageObject (value) {
    try{
-        console.log(this.state.apiImportada);
+        
         const jsonValue = JSON.stringify(value); 
          await Asyncstorage.setItem( "@myObject" , jsonValue)
  
@@ -30,35 +33,36 @@ export  class Contact extends Component{
  
  
 
-
-
-
-  async storageString (value) {
+  async storageContact (value) {
     try{
         const id = value.login.uuid
         
-
         if (this.state.importados.map(x => x.login.uuid).indexOf(id)===-1) {
+          
             alert("The selected contact has been imported")
-            this.state.importados.push(value)
-
-            console.log(this.state.importados);
-            
-          const jsonValue = JSON.stringify(this.state.importados)
          
+            this.state.importados.push(value)
+            const jsonValue = JSON.stringify(this.state.importados)
             await Asyncstorage.setItem( "@myContacts" , jsonValue)
+                let cantidadDeImportados = this.state.importados.length
+                this.setState({numeroDeImportados: cantidadDeImportados})
+         /*   let resultado = this.state.contactos.filter ((item) => {
+                return item.login.uuid !== value.login.uuid
+              })
+          
+          this.setState({contactos:resultado})
+
+          */
+
+
+
           }
           else {
             
             alert("The selected contact has been removed")
-            
-            
-            this.state.importados.splice(this.state.importados.indexOf(value.login.uuid),1)
-           
-            const jsonValue = JSON.stringify(this.state.importados)
-                   
-       
-         
+              
+            this.state.importados.splice(this.state.importados.indexOf(value.login.uuid),1)   
+            const jsonValue = JSON.stringify(this.state.importados)  
           await Asyncstorage.setItem( "@myContacts" , jsonValue)
           }
         
@@ -67,7 +71,17 @@ export  class Contact extends Component{
     }
   }
  
- 
+ cargarPersonas() {
+    
+    this.getDataFromApi()
+    this.setState({activity: true})
+    
+ }
+ async getDataFromApi (){
+     let personas = await getData()
+     this.setState({contactos : personas, apiImportada: personas, activity: false})
+     
+ }
 
 
         keyExtractor = (item ,idx) => idx.toString();
@@ -77,6 +91,8 @@ export  class Contact extends Component{
                 
                 <View>
 
+                    
+                   
                         <Image style={styles.image} source={{uri: item.picture.thumbnail}} />       
                             <Text> {item.name.first}</Text> 
                             <Text> {item.name.last} </Text>
@@ -84,36 +100,16 @@ export  class Contact extends Component{
                             <Text> {item.dob.date.substring(0,10)} - {item.dob.age} años </Text>
                           
                         
-                            <TouchableOpacity
-                                  
-                                  onPress={()=> Alert.alert(
-                                      "Edad: " + item.dob.age,
-                                       "Email: " + item.email,
-                                   /*   "Direccion: " + item.location.street.name + item.location.street.number,
-                                      "Estado: " + item.location.state + item.location.city + item.location.postcode,
-                                      "Fecha: " + item.registered.date.substring(0,10),
-                                      "Teleono: " + item.phone,
-
-                                      */
-
-                                      
-                                      
-                                      )}       
-                            >
-                                <Text>Ver detalle</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress= {()=> this.storageString(item)}>
+                          
+                            <TouchableOpacity onPress= {()=> this.storageContact(item)}>
                             <Text> Guardar contacto! </Text>
                             </TouchableOpacity>
-                            
+
+                           
                            
                           
-        <Text>     
-                   {this.state.importados}
-                          </Text>
 
-                      
+               
 
                 </View>
             )
@@ -121,10 +117,6 @@ export  class Contact extends Component{
 
         componentDidMount () {
          
-            getData()
-            .then(results => {
-                this.setState({contactos : results, apiImportada: results})
-            })
            
         }
 
@@ -136,23 +128,42 @@ export  class Contact extends Component{
   return (
 
     <View style={styles.container}>
-        
 
-         
+
+
+        <TextInput  keyboardType="number-pad"
+                      placeholder="Ingresa la cantidad de personas"
+                     
+                      onChangeText={text=> this.setState({numeroDePersonas : text})}
+          /> 
+
+                    <TouchableOpacity style= {styles.touchable} onPress={this.cargarPersonas.bind(this)}>
+                            <Text>Cargar personas </Text>
+                    </TouchableOpacity>
+
+                    <Text> Cantidad de importados : {this.state.numeroDeImportados} </Text>
        
+                           <View>  
+                            { this.state.activity
 
-
-
-   
-   
-    <FlatList
+                            ? <ActivityIndicator
+                                        color= "blue"
+                                        size={60}
+                                       
+                            />  
+        
+                            :  <FlatList
                         data= {this.state.contactos}
                         renderItem={this.renderItem}
                         keyExtractor={this.keyExtractor}
-            > 
+                        
+                        /> 
 
 
-        </FlatList>
+         }
+
+</View>
+         
 
         
   </View>
@@ -177,5 +188,9 @@ export  class Contact extends Component{
     image: {
         height: 100,
         width: 100,
+    },
+    touchable: {
+        marginTop: 50,
     }
+
   });
