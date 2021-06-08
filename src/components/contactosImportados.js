@@ -25,9 +25,7 @@ export  class ContactosImportados extends Component{
   componentDidMount () {
     this.getObjectStorage();
     this.getMyContactsStorage();
-   
-   
-   
+    
 }
 
 showModal (item){
@@ -67,33 +65,15 @@ showModal (item){
             const jsonValue = JSON.stringify(this.state.contactosBorrados)
             await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
           } */
-        
-      
              
-          
   
     }catch (error){
       console.log(error);
     }
 
-
-
-
-
-
-
-
-    
-   
-  
-  
-  
-  
-  
-  
     };   
 
-      searchData(text) {
+      searchFirstName(text) {
       
             if(text.length !== 0) { 
         const newData = this.state.misContactos.filter(item => {
@@ -113,6 +93,49 @@ showModal (item){
             })
         }
  } 
+ searchLastName(text) {
+      
+  if(text.length !== 0) { 
+const newData = this.state.misContactos.filter(item => {
+const itemData = item.name.last.toUpperCase();
+const textData = text.toUpperCase();
+return itemData.indexOf(textData) > -1
+});
+
+this.setState({
+misContactos: newData,
+text: text
+})
+} else {
+  this.setState({
+      misContactos: this.state.contactosOriginal
+
+  })
+}
+} 
+
+searchAge(text) {
+      
+  if(text.length !== 0) { 
+const newData = this.state.misContactos.filter(item => {
+
+const itemData = item.dob.age.toString()
+
+return itemData.indexOf(text) > -1
+});
+
+this.setState({
+misContactos: newData,
+text: text
+})
+} else {
+  this.setState({
+      misContactos: this.state.contactosOriginal
+
+  })
+}
+} 
+
 
   async getObjectStorage () {
    
@@ -188,16 +211,16 @@ showModal (item){
   async storageComentarios (value) {
     try{
        
-        var resultado = value
-    
-
-        Object.assign(resultado, 
-            {
-                comentarios: this.state.comentarios
-            
-        });
         
-      
+    
+   Object.assign(value, 
+            {
+                comentarios: this.state.comentarios  });
+          
+                const jsonValue = JSON.stringify(this.state.misContactos)
+                await Asyncstorage.setItem( "@myContacts" , jsonValue)
+
+
     }catch (error){
       console.log(error);
     }
@@ -268,7 +291,17 @@ showModal (item){
              <TextInput  keyboardType="default"
                       placeholder="Filtrar por nombre"
                 
-                      onChangeText={(text) => this.searchData(text) }
+                      onChangeText={(text) => this.searchFirstName(text) }
+          /> 
+            <TextInput  keyboardType="default"
+                      placeholder="Filtrar por apellido"
+                
+                      onChangeText={(text) => this.searchLastName(text) }
+          /> 
+           <TextInput  keyboardType="number-pad"
+                      placeholder="Filtrar por edad"
+                
+                      onChangeText={(text) => this.searchAge(text) }
           /> 
 
   
@@ -302,27 +335,7 @@ showModal (item){
         <Text style= {styles.textModal}> {this.state.itemModal.location.state} {this.state.itemModal.location.city} {this.state.itemModal.location.country} {this.state.itemModal.location.postcode} </Text> 
         <Text style= {styles.textModal}> {this.state.itemModal.registered.date.substring(0,10)}</Text> 
         <Text style= {styles.textModal}> {this.state.itemModal.phone}</Text>
-        <Text style= {styles.textModal}> {this.state.comentarios}</Text> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <Text style= {styles.textModal}> {this.state.itemModal.comentarios}</Text> 
 
 
         </>

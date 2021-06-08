@@ -31,32 +31,35 @@ export  class Contact extends Component{
    }
  }
  
- 
-
   async storageContact (value) {
     try{
         const id = value.login.uuid
         
-        if (this.state.importados.map(x => x.login.uuid).indexOf(id)===-1) {
+       // if (this.state.importados.map(x => x.login.uuid).indexOf(id)===-1) {
           
             alert("The selected contact has been imported")
          
             this.state.importados.push(value)
+          
             const jsonValue = JSON.stringify(this.state.importados)
             await Asyncstorage.setItem( "@myContacts" , jsonValue)
-                let cantidadDeImportados = this.state.importados.length
-                this.setState({numeroDeImportados: cantidadDeImportados})
-         /*   let resultado = this.state.contactos.filter ((item) => {
+              
+            
+            let cantidadDeImportados = this.state.importados.length
+            
+            this.setState({numeroDeImportados: cantidadDeImportados})
+            
+            let resultado = this.state.contactos.filter ((item) => {
                 return item.login.uuid !== value.login.uuid
               })
           
           this.setState({contactos:resultado})
 
-          */
+        
 
 
 
-          }
+        /*  }
           else {
             
             alert("The selected contact has been removed")
@@ -65,7 +68,7 @@ export  class Contact extends Component{
             const jsonValue = JSON.stringify(this.state.importados)  
           await Asyncstorage.setItem( "@myContacts" , jsonValue)
           }
-        
+        */
    }catch (error){
       console.log(error);
     }
@@ -83,16 +86,32 @@ export  class Contact extends Component{
      
  }
 
+ async getMyContactsStorage () {
+  try{
+    const value = await Asyncstorage.getItem("@myContacts");
+    console.log(value);
+
+    if(value !== null){
+      const contactos_recuperados = JSON.parse(value);
+      this.setState({ importados: contactos_recuperados})
+    } else {
+      console.log("No existe nada");
+    }
+  } catch (error){
+    console.log(error);
+  }
+}
+
 
         keyExtractor = (item ,idx) => idx.toString();
         renderItem = ({item}) => {
             return (
                 
                 
-                <View>
+                <View >
 
                     
-                   
+                   <View style={styles.card}> 
                         <Image style={styles.image} source={{uri: item.picture.thumbnail}} />       
                             <Text> {item.name.first}</Text> 
                             <Text> {item.name.last} </Text>
@@ -104,19 +123,17 @@ export  class Contact extends Component{
                             <TouchableOpacity onPress= {()=> this.storageContact(item)}>
                             <Text> Guardar contacto! </Text>
                             </TouchableOpacity>
-
+                        
+                        
+                      </View>
                            
                            
-                          
-
-               
-
                 </View>
             )
         }
 
         componentDidMount () {
-         
+         this.getMyContactsStorage()
            
         }
 
@@ -191,6 +208,16 @@ export  class Contact extends Component{
     },
     touchable: {
         marginTop: 50,
+    },
+    card: {
+      borderStyle: "solid",
+        borderWidth: 1,
+        borderColor: "grey",
+      backgroundColor:"gainsboro",
+      marginTop: 10,
+      borderRadius: 15,
+      width: "100%"
+
     }
 
   });

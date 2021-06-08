@@ -18,11 +18,28 @@ export  class PapeleraDeReciclaje extends Component{
   }
   componentDidMount () {
     this.getBorrados();
- 
+    this.getMyContactsStorage();
      
    
 }
 
+async getMyContactsStorage () {
+  try{
+    const value = await Asyncstorage.getItem("@myContacts");
+   
+
+    if(value !== null){
+      const contactos_recuperados = JSON.parse(value);
+      this.setState({ misContactos: contactos_recuperados})
+      console.log(this.state.misContactos);
+      
+    } else {
+      console.log("No existe nada");
+    }
+  } catch (error){
+    console.log(error);
+  }
+}
 
 async removeTodos (key){
     try{
@@ -79,6 +96,27 @@ async removeTodos (key){
       console.log(error);
     }
 }
+async recuperarContacto(value){
+  try{
+
+  
+      let resultado = this.state.contactosBorrados.filter ((item) => {
+          return item.login.uuid !== value.login.uuid
+        })
+        this.setState({contactosBorrados:resultado})
+      
+        this.state.misContactos.push(value)
+
+        const jsonValue = JSON.stringify(this.state.misContactos)
+
+      await Asyncstorage.setItem( "@myContacts" , jsonValue)
+
+
+  } catch(error){
+    console.log(error);
+  }
+}
+
 
 
         keyExtractor = (item ,idx) => idx.toString();
@@ -95,29 +133,17 @@ async removeTodos (key){
                             <Text> {item.dob.date.substring(0,10)} - {item.dob.age} años </Text>
                           
                         
-                            <TouchableOpacity
-                                  
-                                  onPress={()=> Alert.alert(
-                                      "Edad: " + item.dob.age,
-                                       "Email: " + item.email,
-                                   /*   "Direccion: " + item.location.street.name + item.location.street.number,
-                                      "Estado: " + item.location.state + item.location.city + item.location.postcode,
-                                      "Fecha: " + item.registered.date.substring(0,10),
-                                      "Teleono: " + item.phone,
-
-                                      */
-
-                                      
-                                      
-                                      )}       
-                            >
-                                <Text>Ver detalle</Text>
-                            </TouchableOpacity>
+                           
 
                             
                             <TouchableOpacity onPress= {()=> this.removeItem(item)}>
                            
                            <Text> borrar! </Text>
+                          
+                           </TouchableOpacity>
+                           <TouchableOpacity onPress= {()=> this.recuperarContacto(item)}>
+                           
+                           <Text> Recuperar contacto! </Text>
                           
                            </TouchableOpacity>
                            
