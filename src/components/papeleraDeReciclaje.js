@@ -104,6 +104,8 @@ async recuperarContacto(value){
           return item.login.uuid !== value.login.uuid
         })
         this.setState({contactosBorrados:resultado})
+        const borrados = JSON.stringify(resultado)
+        await Asyncstorage.setItem( "@misContactosBorrados" , borrados)
       
         this.state.misContactos.push(value)
 

@@ -304,7 +304,10 @@ text: text
                       onChangeText={(text) => this.searchAge(text) }
           /> 
 
-  
+
+<Text  onPress = {() => this.props.navigation.navigate("Papelera reciclaje")} > Ir a papelera de reciclaje</Text>
+
+
     <FlatList
                         data= {this.state.misContactos}
                         renderItem={this.renderItem}

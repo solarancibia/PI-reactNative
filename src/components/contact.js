@@ -81,7 +81,7 @@ export  class Contact extends Component{
     
  }
  async getDataFromApi (){
-     let personas = await getData()
+     let personas = await getData(this.state.numeroDePersonas)
      this.setState({contactos : personas, apiImportada: personas, activity: false})
      
  }
@@ -147,18 +147,20 @@ export  class Contact extends Component{
     <View style={styles.container}>
 
 
-
-        <TextInput  keyboardType="number-pad"
-                      placeholder="Ingresa la cantidad de personas"
-                     
-                      onChangeText={text=> this.setState({numeroDePersonas : text})}
-          /> 
+      
 
                     <TouchableOpacity style= {styles.touchable} onPress={this.cargarPersonas.bind(this)}>
                             <Text>Cargar personas </Text>
                     </TouchableOpacity>
 
+                    <TextInput  keyboardType="number-pad"
+                      placeholder="Ingresa la cantidad de personas"
+                     
+                      onChangeText={text=> this.setState({numeroDePersonas : text})}
+          /> 
                     <Text> Cantidad de importados : {this.state.numeroDeImportados} </Text>
+
+                    <Text  onPress = {() => this.props.navigation.navigate("Contactos Importados")} > Ir a mis contactos</Text>
        
                            <View>  
                             { this.state.activity
@@ -207,7 +209,7 @@ export  class Contact extends Component{
         width: 100,
     },
     touchable: {
-        marginTop: 50,
+        marginTop: 70,
     },
     card: {
       borderStyle: "solid",
