@@ -1,32 +1,32 @@
 import "react-native-gesture-handler";
 import React, { Component } from 'react';
 import {NavigationContainer} from "@react-navigation/native"
-import {createStackNavigator} from "@react-navigation/stack"
+import {createDrawerNavigator} from "@react-navigation/drawer"
 
 
 
 import { StatusBar } from 'expo-status-bar';
 
 
-import {Contact} from "./src/components/contact"
-import {ContactosImportados} from "./src/components/contactosImportados"
-import {PapeleraDeReciclaje} from "./src/components/papeleraDeReciclaje"
+import {Contact} from "./src/screens/contact"
+import {ContactosImportados} from "./src/screens/contactosImportados"
+import {PapeleraDeReciclaje} from "./src/screens/papeleraDeReciclaje"
 
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 class App extends Component {
   render() { 
   return (
       <NavigationContainer> 
-         <Stack.Navigator> 
+         <Drawer.Navigator> 
 
-           <Stack.Screen name= "Contactos" component={Contact} />
-           <Stack.Screen name= "Contactos Importados" component={ContactosImportados} />
-           <Stack.Screen name= "Papelera reciclaje" component={PapeleraDeReciclaje} />
+           <Drawer.Screen name= "Contactos" component={Contact} options= {{title: "Importar contactos"}}  />
+           <Drawer.Screen name= "Contactos Importados" component={ContactosImportados} options= {{title: "Mis Contactos"}} />
+           <Drawer.Screen name= "Papelera reciclaje" component={PapeleraDeReciclaje} options= {{title: "Papelera"}} />
   
   
 
-    </Stack.Navigator>
+    </Drawer.Navigator>
     </NavigationContainer>
 
   );

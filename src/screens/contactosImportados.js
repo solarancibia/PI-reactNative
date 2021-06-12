@@ -23,9 +23,17 @@ export  class ContactosImportados extends Component{
     }
   }
   componentDidMount () {
-    this.getObjectStorage();
-    this.getMyContactsStorage();
+    this.unsuscribe = this.props.navigation.addListener( "focus", () => {
+      this.getObjectStorage();
+      this.getMyContactsStorage();
+    })
+   
     
+
+}
+
+componentWillUnmount(){
+        this.unsuscribe
 }
 
 showModal (item){

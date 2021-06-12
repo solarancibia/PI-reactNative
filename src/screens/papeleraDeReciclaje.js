@@ -16,12 +16,22 @@ export  class PapeleraDeReciclaje extends Component{
     
     }
   }
+
   componentDidMount () {
-    this.getBorrados();
-    this.getMyContactsStorage();
-     
+    this.unsuscribe = this.props.navigation.addListener( "focus", () => {
+      this.getBorrados();
+      this.getMyContactsStorage();
+    })
    
+    
+
 }
+
+componentWillUnmount(){
+        this.unsuscribe
+}
+
+ 
 
 async getMyContactsStorage () {
   try{
