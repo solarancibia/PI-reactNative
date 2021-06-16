@@ -3,6 +3,8 @@ import React from 'react';
 import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput, Modal } from 'react-native';
 import {Component} from "react"
 import {getData} from "../api/RandomUsers"
+import {styles} from "../css/estilo"
+import {Cards} from "../components/cards"
 import Asyncstorage from "@react-native-async-storage/async-storage"
 export  class ContactosImportados extends Component{
   constructor(props){
@@ -22,20 +24,38 @@ export  class ContactosImportados extends Component{
     
     }
   }
+
   componentDidMount () {
     this.unsuscribe = this.props.navigation.addListener( "focus", () => {
-      this.getObjectStorage();
+
       this.getMyContactsStorage();
-    })
+      this.getBorrados();
+   })
    
-    
-
 }
-
 componentWillUnmount(){
-        this.unsuscribe
+        this.unsuscribe()
 }
+async getBorrados () {
+   
+  try{
 
+   const value = await Asyncstorage.getItem("@misContactosBorrados");
+       
+   if(value !== null){
+   
+      const objeto_recuperado = JSON.parse(value);
+      this.setState({contactosBorrados: objeto_recuperado})
+   
+  } else {
+  
+      console.log("No existe nada");
+   }
+ } 
+ catch (error){
+   console.log(error);
+ }
+}
 showModal (item){
     this.setState({itemModal: item, showModal: !this.state.showModal})
 }
@@ -43,45 +63,30 @@ showModal (item){
  async borrar(value){
 
     try{
-        const id = value.login.uuid
-        
-
-        if (this.state.contactosBorrados.map(x => x.login.uuid).indexOf(id)===-1) {
+    
             alert("El contacto se mando a la papelera de reciclaje")
-        
-                this.state.contactosBorrados.push(value)
-                const borrados = JSON.stringify(this.state.contactosBorrados)
-                await Asyncstorage.setItem( "@misContactosBorrados" , borrados)
+          
+            this.state.contactosBorrados.push(value)
+            const borrados = JSON.stringify(this.state.contactosBorrados)
+            await Asyncstorage.setItem( "@misContactosBorrados" , borrados)
 
-                let resultado = this.state.misContactos.filter ((item) => {
-                    return item.login.uuid !== value.login.uuid
-                  })
-              
-              this.setState({misContactos:resultado})
-              const jsonValue = JSON.stringify(resultado)
-                await Asyncstorage.setItem( "@myContacts" , jsonValue)
+            let resultado = this.state.misContactos.filter ((item) => {
+              return item.login.uuid !== value.login.uuid
+            })
+             this.setState({misContactos:resultado})
 
-         
-            }
-       /*   else {
-            
-            alert("El contacto se removio de la papelera de reciclaje")
-            
-            
-            this.state.contactosBorrados.splice(this.state.contactosBorrados.indexOf(value.login.uuid),1)
-           
-            const jsonValue = JSON.stringify(this.state.contactosBorrados)
-            await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
-          } */
+            const jsonValue = JSON.stringify(resultado)
+             await Asyncstorage.setItem( "@myContacts" , jsonValue)
+          
              
-  
+
     }catch (error){
       console.log(error);
     }
 
     };   
 
-      searchFirstName(text) {
+ searchFirstName(text) {
       
             if(text.length !== 0) { 
         const newData = this.state.misContactos.filter(item => {
@@ -144,7 +149,6 @@ text: text
 }
 } 
 
-
   async getObjectStorage () {
    
     try{
@@ -170,8 +174,7 @@ text: text
  async getMyContactsStorage () {
     try{
       const value = await Asyncstorage.getItem("@myContacts");
-      console.log(value);
-  
+   
       if(value !== null){
         const contactos_recuperados = JSON.parse(value);
         this.setState({ misContactos: contactos_recuperados, contactosOriginal: contactos_recuperados})
@@ -185,27 +188,27 @@ text: text
 
   async storageBorrados (value) {
     try{
-        const id = value.login.uuid
+      //  const id = value.login.uuid
         
 
-        if (this.state.contactosBorrados.map(x => x.login.uuid).indexOf(id)===-1) {
+       // if (this.state.contactosBorrados.map(x => x.login.uuid).indexOf(id)===-1) {
             alert("El contacto se mando a la papelera de reciclaje")
             this.state.contactosBorrados.push(value)
      
           const jsonValue = JSON.stringify(this.state.contactosBorrados)
          
             await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
-          }
-          else {
+       //   }
+         // else {
             
-            alert("El contacto se removio de la papelera de reciclaje")
+        //    alert("El contacto se removio de la papelera de reciclaje")
             
             
-            this.state.contactosBorrados.splice(this.state.contactosBorrados.indexOf(value.login.uuid),1)
+          //  this.state.contactosBorrados.splice(this.state.contactosBorrados.indexOf(value.login.uuid),1)
            
-            const jsonValue = JSON.stringify(this.state.contactosBorrados)
-            await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
-          }
+            //const jsonValue = JSON.stringify(this.state.contactosBorrados)
+            //await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
+         // }
         
       
              
@@ -239,47 +242,34 @@ text: text
             return (
                 
                 
-                <View>
-
-                        <Image style={styles.image} source={{uri: item.picture.thumbnail}} />       
-                            <Text> {item.name.first}</Text> 
-                            <Text> {item.name.last} </Text>
-                            <Text> {item.email}</Text> 
-                            <Text> {item.dob.date.substring(0,10)} - {item.dob.age} años </Text>
-                          
+               <View style={styles.cardContainer}>
+                      <View style={styles.card} > 
+                       
+                      <Cards item ={item} />  
                         
                             <TextInput  keyboardType="default"
                        placeholder="Ingrese algun comentario.."
-                     
                        style={styles.estiloInput}
                        numberOfLines={10}
                        multiline={true}
                       onChangeText={text=> this.setState({comentarios : text})}
-          /> 
+                            /> 
 
-<TouchableOpacity onPress= {()=> this.storageComentarios(item)}>
-                           
-                           <Text> Guardar comentario </Text>
-                          
-                           </TouchableOpacity>
-                            <TouchableOpacity onPress= {()=> this.showModal(item)}>
-                           
-                           <Text> Ver  </Text>
-                          
-                           </TouchableOpacity>
+
+                        <TouchableOpacity onPress= {()=> this.storageComentarios(item)}>
+                              <Text> Guardar comentario </Text>
+                         </TouchableOpacity>
+                            
+                            
+                          <TouchableOpacity onPress= {()=> this.showModal(item)}>
+                              <Text> Ver detalle  </Text>
+                          </TouchableOpacity>
 
 
                             <TouchableOpacity onPress= {()=> this.borrar(item)}>
-                           
-                            <Text> Borrar </Text>
-                           
+                              <Text> Borrar </Text>
                             </TouchableOpacity>
-
-
-
-                        
-
-                           
+                            </View>
                 </View>
             )
         }
@@ -295,74 +285,65 @@ text: text
 
     <View style={styles.container}>
         
-
-             <TextInput  keyboardType="default"
+       
+            <TextInput  keyboardType="default"
                       placeholder="Filtrar por nombre"
-                
+                      style={styles.estiloInput}
                       onChangeText={(text) => this.searchFirstName(text) }
           /> 
             <TextInput  keyboardType="default"
                       placeholder="Filtrar por apellido"
-                
+                      style={styles.estiloInput}
                       onChangeText={(text) => this.searchLastName(text) }
           /> 
            <TextInput  keyboardType="number-pad"
                       placeholder="Filtrar por edad"
-                
+                      style={styles.estiloInput}
                       onChangeText={(text) => this.searchAge(text) }
           /> 
 
 
-<Text  onPress = {() => this.props.navigation.navigate("Papelera reciclaje")} > Ir a papelera de reciclaje</Text>
-
-
-    <FlatList
+              <FlatList
                         data= {this.state.misContactos}
                         renderItem={this.renderItem}
                         keyExtractor={this.keyExtractor}
-            > 
-        </FlatList>
+               /> 
+       
 
-        
-        
-          <Modal
+              <Modal
                 visible= {this.state.showModal}
                 animationType= "slide"
                 transparent ={true}
         >
 
-        <View style= {styles.modalContainer}>
-         <View style= {styles.modal}>
+      <View style= {styles.modalContainer}>
+           <View style= {styles.modal}>
 
              {      this.state.itemModal
 
-            ? 
+                ? 
             <>
-        <Image style= {{width: 100, height: 100}} source={{uri: this.state.itemModal.picture.thumbnail} } />
-        <Text style= {styles.textModal}> {this.state.itemModal.name.first}</Text> 
-        <Text style= {styles.textModal}> {this.state.itemModal.name.last}</Text> 
-        <Text style= {styles.textModal}>  {this.state.itemModal.dob.date.substring(0,10)} - {this.state.itemModal.dob.age} años </Text> 
-        <Text style= {styles.textModal}> {this.state.itemModal.location.street.name} {this.state.itemModal.location.street.number } </Text> 
-        <Text style= {styles.textModal}> {this.state.itemModal.location.state} {this.state.itemModal.location.city} {this.state.itemModal.location.country} {this.state.itemModal.location.postcode} </Text> 
-        <Text style= {styles.textModal}> {this.state.itemModal.registered.date.substring(0,10)}</Text> 
-        <Text style= {styles.textModal}> {this.state.itemModal.phone}</Text>
-        <Text style= {styles.textModal}> {this.state.itemModal.comentarios}</Text> 
+                <Image style= {{width: 100, height: 100}} source={{uri: this.state.itemModal.picture.thumbnail} } />
+                <Text style= {styles.textModal}> {this.state.itemModal.name.first}</Text> 
+                <Text style= {styles.textModal}> {this.state.itemModal.name.last}</Text> 
+                <Text style= {styles.textModal}>  {this.state.itemModal.dob.date.substring(0,10)} - {this.state.itemModal.dob.age} años </Text> 
+                <Text style= {styles.textModal}> {this.state.itemModal.location.street.name} {this.state.itemModal.location.street.number } </Text> 
+                <Text style= {styles.textModal}> {this.state.itemModal.location.state} {this.state.itemModal.location.city} {this.state.itemModal.location.country} {this.state.itemModal.location.postcode} </Text> 
+                <Text style= {styles.textModal}> {this.state.itemModal.registered.date.substring(0,10)}</Text> 
+                <Text style= {styles.textModal}> {this.state.itemModal.phone}</Text>
+                <Text style= {styles.textModal}> {this.state.itemModal.comentarios}</Text> 
 
 
-        </>
-        : <Text>No hay nada</Text>
+           </>
+      
+                : <Text>No hay nada</Text>
 
     }
-        <Text style= {styles.closeButton} 
-                onPress= {() => this.setState({showModal: false})}
-        > 
-            x
-        </Text> 
+             <Text style= {styles.closeButton}  onPress= {() => this.setState({showModal: false})} >  x </Text> 
 
-    </View>
-
-</View>
-</Modal>
+      </View>
+            </View>
+                  </Modal>
       
         
   </View>
@@ -374,8 +355,7 @@ text: text
 
  }
 
-
-
+/*
  const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -422,3 +402,5 @@ text: text
         elevation: 10
     }
   });
+
+  */

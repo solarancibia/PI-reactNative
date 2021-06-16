@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput } from 'react-native';
 import {Component} from "react"
 import {getData} from "../api/RandomUsers"
+import {styles} from "../css/estilo"
 import Asyncstorage from "@react-native-async-storage/async-storage"
 export  class PapeleraDeReciclaje extends Component{
   constructor(props){
@@ -17,21 +18,15 @@ export  class PapeleraDeReciclaje extends Component{
     }
   }
 
-  componentDidMount () {
+componentDidMount () {
     this.unsuscribe = this.props.navigation.addListener( "focus", () => {
       this.getBorrados();
       this.getMyContactsStorage();
-    })
-   
-    
-
+    })  
 }
-
 componentWillUnmount(){
-        this.unsuscribe
+        this.unsuscribe()
 }
-
- 
 
 async getMyContactsStorage () {
   try{
@@ -41,7 +36,6 @@ async getMyContactsStorage () {
     if(value !== null){
       const contactos_recuperados = JSON.parse(value);
       this.setState({ misContactos: contactos_recuperados})
-      console.log(this.state.misContactos);
       
     } else {
       console.log("No existe nada");
@@ -55,9 +49,12 @@ async removeTodos (key){
     try{
 
         await Asyncstorage.removeItem(key)
-        
-      
-          this.setState({contactosBorrados:  [] })
+        let resultado = [];
+        const jsonValue = JSON.stringify(resultado)
+        await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
+
+
+         this.setState({contactosBorrados:  [] })
         } catch(error){
         console.log(error);
       }
@@ -69,7 +66,7 @@ async removeTodos (key){
     try{
 
      const value = await Asyncstorage.getItem("@misContactosBorrados");
-     console.log(value);
+   
         
      if(value !== null){
      
@@ -87,8 +84,6 @@ async removeTodos (key){
  }
  async removeItem(value){
     try{
-
-      //  await Asyncstorage.removeItem(key)
 
         let resultado = this.state.contactosBorrados.filter ((item) => {
             return item.login.uuid !== value.login.uuid
@@ -113,7 +108,9 @@ async recuperarContacto(value){
       let resultado = this.state.contactosBorrados.filter ((item) => {
           return item.login.uuid !== value.login.uuid
         })
+     
         this.setState({contactosBorrados:resultado})
+
         const borrados = JSON.stringify(resultado)
         await Asyncstorage.setItem( "@misContactosBorrados" , borrados)
       
@@ -137,28 +134,22 @@ async recuperarContacto(value){
                 
                 
                 <View>
-
+                        <View style={styles.card}> 
                         <Image style={styles.image} source={{uri: item.picture.thumbnail}} />       
                             <Text> {item.name.first}</Text> 
                             <Text> {item.name.last} </Text>
                             <Text> {item.email}</Text> 
                             <Text> {item.dob.date.substring(0,10)} - {item.dob.age} años </Text>
                           
-                        
                            
-
-                            
-                            <TouchableOpacity onPress= {()=> this.removeItem(item)}>
-                           
-                           <Text> borrar! </Text>
-                          
-                           </TouchableOpacity>
+                            <TouchableOpacity onPress= {()=> this.removeItem(item)}>  
+                                <Text> borrar! </Text>
+                            </TouchableOpacity>
+                         
                            <TouchableOpacity onPress= {()=> this.recuperarContacto(item)}>
-                           
-                           <Text> Recuperar contacto! </Text>
-                          
-                           </TouchableOpacity>
-                           
+                              <Text> Recuperar contacto! </Text>
+                          </TouchableOpacity>
+                          </View>
                 </View>
             )
         }
@@ -176,27 +167,21 @@ async recuperarContacto(value){
         
 
          
-        <TouchableOpacity onPress= {()=> this.removeTodos("@misContactosBorrados")}>
-                           
-                           <Text> Borrar todos! </Text>
-                          
-                           </TouchableOpacity>
+               <TouchableOpacity onPress= {()=> this.removeTodos("@misContactosBorrados")}>
+                        <Text> Borrar todos! </Text>
+              </TouchableOpacity>
 
 
 
    
    
-    <FlatList
+             <FlatList
                         data= {this.state.contactosBorrados}
                         renderItem={this.renderItem}
                         keyExtractor={this.keyExtractor}
-            > 
-
-
-        </FlatList>
-
+                 /> 
         
-  </View>
+    </View>
 
 
   
@@ -206,7 +191,7 @@ async recuperarContacto(value){
  }
 
 
-
+/*
  const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -220,3 +205,4 @@ async recuperarContacto(value){
         width: 100,
     }
   });
+  */

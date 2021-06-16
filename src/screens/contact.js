@@ -3,6 +3,8 @@ import React from 'react';
 import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import {Component} from "react"
 import {getData} from "../api/RandomUsers"
+import {Cards} from "../components/cards"
+import {styles} from "../css/estilo"
 import Asyncstorage from "@react-native-async-storage/async-storage"
 export  class Contact extends Component{
   constructor(props){
@@ -19,8 +21,20 @@ export  class Contact extends Component{
     }
   }
 
-  
- async storageObject (value) {
+
+
+  componentDidMount () {
+    this.unsuscribe = this.props.navigation.addListener( "focus", () => {
+
+      this.getMyContactsStorage();
+   })
+   
+}
+componentWillUnmount(){
+        this.unsuscribe()
+}
+
+ /* async storageObject (value) {
    try{
         
         const jsonValue = JSON.stringify(value); 
@@ -30,23 +44,22 @@ export  class Contact extends Component{
      console.log(error);
    }
  }
+ */
  
-  async storageContact (value) {
+ async storageContact (value) {
     try{
-        const id = value.login.uuid
-        
-       // if (this.state.importados.map(x => x.login.uuid).indexOf(id)===-1) {
+     
           
             alert("The selected contact has been imported")
          
             this.state.importados.push(value)
           
             const jsonValue = JSON.stringify(this.state.importados)
+          
             await Asyncstorage.setItem( "@myContacts" , jsonValue)
               
             
             let cantidadDeImportados = this.state.importados.length
-            
             this.setState({numeroDeImportados: cantidadDeImportados})
             
             let resultado = this.state.contactos.filter ((item) => {
@@ -56,30 +69,19 @@ export  class Contact extends Component{
           this.setState({contactos:resultado})
 
         
-
-
-
-        /*  }
-          else {
-            
-            alert("The selected contact has been removed")
-              
-            this.state.importados.splice(this.state.importados.indexOf(value.login.uuid),1)   
-            const jsonValue = JSON.stringify(this.state.importados)  
-          await Asyncstorage.setItem( "@myContacts" , jsonValue)
-          }
-        */
    }catch (error){
       console.log(error);
     }
   }
  
+
  cargarPersonas() {
     
     this.getDataFromApi()
     this.setState({activity: true})
     
  }
+
  async getDataFromApi (){
      let personas = await getData(this.state.numeroDePersonas)
      this.setState({contactos : personas, apiImportada: personas, activity: false})
@@ -112,14 +114,12 @@ export  class Contact extends Component{
 
                     
                    <View style={styles.card}> 
-                        <Image style={styles.image} source={{uri: item.picture.thumbnail}} />       
-                            <Text> {item.name.first}</Text> 
-                            <Text> {item.name.last} </Text>
-                            <Text> {item.email}</Text> 
-                            <Text> {item.dob.date.substring(0,10)} - {item.dob.age} años </Text>
-                          
-                        
-                          
+                       
+                       <Cards item ={item} />
+
+
+                       
+                    
                             <TouchableOpacity onPress= {()=> this.storageContact(item)}>
                             <Text> Guardar contacto! </Text>
                             </TouchableOpacity>
@@ -132,11 +132,7 @@ export  class Contact extends Component{
             )
         }
 
-        componentDidMount () {
-         this.getMyContactsStorage()
-           
-        }
-
+  
 
 
  render() { 
@@ -147,22 +143,22 @@ export  class Contact extends Component{
     <View style={styles.container}>
 
 
-      
 
-                    <TouchableOpacity style= {styles.touchable} onPress={this.cargarPersonas.bind(this)}>
-                            <Text>Cargar personas </Text>
+                   <TouchableOpacity style= {styles.touchable} onPress={this.cargarPersonas.bind(this)}>
+                       <Text>Cargar personas </Text>
                     </TouchableOpacity>
 
                     <TextInput  keyboardType="number-pad"
                       placeholder="Ingresa la cantidad de personas"
-                     
-                      onChangeText={text=> this.setState({numeroDePersonas : text})}
-          /> 
+                    onChangeText={text=> this.setState({numeroDePersonas : text})}
+                    /> 
+           
+                
                     <Text> Cantidad de importados : {this.state.numeroDeImportados} </Text>
 
-                    <Text  onPress = {() => this.props.navigation.navigate("Contactos Importados")} > Ir a mis contactos</Text>
+                
        
-                           <View>  
+              <View>  
                             { this.state.activity
 
                             ? <ActivityIndicator
@@ -170,18 +166,17 @@ export  class Contact extends Component{
                                         size={60}
                                        
                             />  
-        
-                            :  <FlatList
+                                
+                           :  <FlatList
                         data= {this.state.contactos}
                         renderItem={this.renderItem}
                         keyExtractor={this.keyExtractor}
                         
                         /> 
+                        
+                          }
 
-
-         }
-
-</View>
+              </View>
          
 
         
@@ -189,13 +184,11 @@ export  class Contact extends Component{
 
 
   
-  )
+  )}
 }
 
- }
 
-
-
+/*
  const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -223,3 +216,7 @@ export  class Contact extends Component{
     }
 
   });
+
+
+
+  */
