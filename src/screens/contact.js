@@ -6,6 +6,7 @@ import {getData} from "../api/RandomUsers"
 import {Cards} from "../components/cards"
 import {styles} from "../css/estilo"
 import Asyncstorage from "@react-native-async-storage/async-storage"
+import { SafeAreaView } from 'react-native-safe-area-context';
 export  class Contact extends Component{
   constructor(props){
     super(props);
@@ -113,14 +114,14 @@ componentWillUnmount(){
                 <View >
 
                     
-                   <View style={styles.card}> 
+                   <View style={styles.cardcontainer}> 
                        
                        <Cards item ={item} />
 
 
                        
                     
-                            <TouchableOpacity onPress= {()=> this.storageContact(item)}>
+                            <TouchableOpacity style={styles.estiloButtonGhost} onPress= {()=> this.storageContact(item)}>
                             <Text> Guardar contacto! </Text>
                             </TouchableOpacity>
                         
@@ -143,10 +144,8 @@ componentWillUnmount(){
     <View style={styles.container}>
 
 
-
-                   <TouchableOpacity style= {styles.touchable} onPress={this.cargarPersonas.bind(this)}>
-                       <Text>Cargar personas </Text>
-                    </TouchableOpacity>
+                <SafeAreaView>
+                
 
                     <TextInput  keyboardType="number-pad"
                       placeholder="Ingresa la cantidad de personas"
@@ -155,7 +154,10 @@ componentWillUnmount(){
            
                 
                     <Text> Cantidad de importados : {this.state.numeroDeImportados} </Text>
-
+                    <TouchableOpacity style= {styles.estiloButton} onPress={this.cargarPersonas.bind(this)}>
+                       <Text style= {styles.estiloTextoButton}>Cargar personas </Text>
+                    </TouchableOpacity>
+                
                 
        
               <View>  
@@ -178,8 +180,8 @@ componentWillUnmount(){
 
               </View>
          
-
-        
+                           
+              </SafeAreaView>
   </View>
 
 

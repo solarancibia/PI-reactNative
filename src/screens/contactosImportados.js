@@ -6,6 +6,7 @@ import {getData} from "../api/RandomUsers"
 import {styles} from "../css/estilo"
 import {Cards} from "../components/cards"
 import Asyncstorage from "@react-native-async-storage/async-storage"
+import { Ionicons } from '@expo/vector-icons';
 export  class ContactosImportados extends Component{
   constructor(props){
     super(props);
@@ -243,7 +244,7 @@ text: text
                 
                 
                <View style={styles.cardContainer}>
-                      <View style={styles.card} > 
+                      <View style={styles.cardcontainer} > 
                        
                       <Cards item ={item} />  
                         
@@ -256,18 +257,18 @@ text: text
                             /> 
 
 
-                        <TouchableOpacity onPress= {()=> this.storageComentarios(item)}>
-                              <Text> Guardar comentario </Text>
+                        <TouchableOpacity style= {styles.estiloButtonGhost} onPress= {()=> this.storageComentarios(item)}>
+                              <Text style= {styles.estiloTextoButton}> Guardar comentario </Text>
                          </TouchableOpacity>
                             
                             
                           <TouchableOpacity onPress= {()=> this.showModal(item)}>
-                              <Text> Ver detalle  </Text>
+                          <Ionicons name="ios-eye-outline" size={24} color="black" />
                           </TouchableOpacity>
 
 
                             <TouchableOpacity onPress= {()=> this.borrar(item)}>
-                              <Text> Borrar </Text>
+                            <Ionicons name="md-trash-outline" size={24} color="black" />
                             </TouchableOpacity>
                             </View>
                 </View>
