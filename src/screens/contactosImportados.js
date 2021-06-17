@@ -7,6 +7,7 @@ import {styles} from "../css/estilo"
 import {Cards} from "../components/cards"
 import Asyncstorage from "@react-native-async-storage/async-storage"
 import { Ionicons } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 export  class ContactosImportados extends Component{
   constructor(props){
     super(props);
@@ -340,7 +341,7 @@ text: text
                 : <Text>No hay nada</Text>
 
     }
-             <Text style= {styles.closeButton}  onPress= {() => this.setState({showModal: false})} >  x </Text> 
+             <Text style= {styles.closeButton}  onPress= {() => this.setState({showModal: false})} >  <EvilIcons name="close" size={24} color="black" /> </Text> 
 
       </View>
             </View>
