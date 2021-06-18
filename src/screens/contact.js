@@ -122,7 +122,7 @@ componentWillUnmount(){
                        
                     
                             <TouchableOpacity style={styles.estiloButtonGhost} onPress= {()=> this.storageContact(item)}>
-                            <Text> Guardar contacto! </Text>
+                            <Text style= {styles.estiloTextoButtonGhost}> Guardar contacto! </Text>
                             </TouchableOpacity>
                         
                         
@@ -147,13 +147,13 @@ componentWillUnmount(){
                 <SafeAreaView>
                 
 
-                    <TextInput  keyboardType="number-pad"
+                    <TextInput style= {styles.estiloInput} keyboardType="number-pad"
                       placeholder="Ingresa la cantidad de personas"
                     onChangeText={text=> this.setState({numeroDePersonas : text})}
                     /> 
            
                 
-                    <Text> Cantidad de importados : {this.state.numeroDeImportados} </Text>
+                    <Text style= {styles.estiloTextoButton}> Cantidad de importados : {this.state.numeroDeImportados} </Text>
                     <TouchableOpacity style= {styles.estiloButton} onPress={this.cargarPersonas.bind(this)}>
                        <Text style= {styles.estiloTextoButton}>Cargar personas </Text>
                     </TouchableOpacity>

@@ -10,11 +10,26 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
 
+    estiloDatos:{
+        alignSelf: "center",
+        marginTop: 5,
+        marginBottom:3,
+    },
+
     estiloInput: {
         borderWidth: 1, 
         borderStyle: "solid", 
-        marginTop: 20, 
-        height:30
+        marginTop: 10, 
+        height:40,
+        width: 150,
+        borderRadius:5,
+        backgroundColor: "rgb(205, 205, 205)",
+        padding: 10,
+    },
+
+    estilocomment:{
+        backgroundColor: "rgb(205, 205, 205)",
+        width:50,
     },
 
     estiloButton: {
@@ -24,6 +39,7 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         borderColor: "#03BFCB",
         padding: 10,
+        color: "#ffffff",
     },
     estiloButtonGhost: {
         backgroundColor: "transparent",
@@ -32,7 +48,7 @@ const styles = StyleSheet.create({
         borderStyle: "solid",
         borderColor: "#03BFCB",
         padding: 10,
-        width: 150,
+        width: 170,
         alignSelf: 'center',
         marginBottom: 10,
         marginTop: 10,
@@ -40,9 +56,21 @@ const styles = StyleSheet.create({
     
 
     estiloTextoButton:{
+        color: "#ffffff",
+        // fontFamily: "Montserrat_500", 
+        fontWeight: "500",
+        alignSelf: "center",
+    },
+
+    estiloTextoButtonGhost:{
         color: "#231E39",
         // fontFamily: "Montserrat_500", 
         fontWeight: "500",
+        alignSelf: "center",
+    },
+
+    iconos:{
+        alignSelf: "center",
     },
 
     container: {
@@ -53,14 +81,25 @@ const styles = StyleSheet.create({
         backgroundColor: "#231E39",
       },
 
-      
+    
+
+      iconosjuntos:{
+        width: 30,
+        height: 30,
+        flexDirection: "row",
+        alignSelf:"center",
+        
+      },
+
+      tacho:{
+        marginLeft: 3,
+      },
 
       image: {
           height: 100,
           width: 100,
          alignSelf: 'center',
-         borderWidth: 1,
-         borderStyle: "solid", 
+         borderWidth: 3,
          borderColor: "#03BFCB",
          borderRadius: 50,
          padding: 7,

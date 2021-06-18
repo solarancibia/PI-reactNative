@@ -5,6 +5,7 @@ import {Component} from "react"
 import {getData} from "../api/RandomUsers"
 import {styles} from "../css/estilo"
 import Asyncstorage from "@react-native-async-storage/async-storage"
+import { Ionicons } from '@expo/vector-icons';
 export  class PapeleraDeReciclaje extends Component{
   constructor(props){
     super(props);
@@ -134,20 +135,19 @@ async recuperarContacto(value){
                 
                 
                 <View>
-                        <View style={styles.card}> 
-                        <Image style={styles.image} source={{uri: item.picture.thumbnail}} />       
-                            <Text> {item.name.first}</Text> 
-                            <Text> {item.name.last} </Text>
-                            <Text> {item.email}</Text> 
-                            <Text> {item.dob.date.substring(0,10)} - {item.dob.age} años </Text>
+                        <View style={styles.cardcontainer}> 
+                        <Image style={styles.image} source={{uri: item.picture.large}} />       
+                            <Text style={styles.estiloDatos}> {item.name.first} {item.name.last}</Text> 
+                            <Text style={styles.estiloDatos}> {item.email}</Text> 
+                            <Text style={styles.estiloDatos}> {item.dob.date.substring(0,10)} - {item.dob.age} años </Text>
                           
                            
                             <TouchableOpacity onPress= {()=> this.removeItem(item)}>  
-                                <Text> borrar! </Text>
+                             <Ionicons style= {styles.iconos} name="md-trash-outline" size={24} color="black" />
                             </TouchableOpacity>
                          
-                           <TouchableOpacity onPress= {()=> this.recuperarContacto(item)}>
-                              <Text> Recuperar contacto! </Text>
+                           <TouchableOpacity style={styles.estiloButtonGhost} onPress= {()=> this.recuperarContacto(item)}>
+                              <Text style= {styles.estiloTextoButtonGhost}> Recuperar contacto!</Text>
                           </TouchableOpacity>
                           </View>
                 </View>
@@ -167,8 +167,8 @@ async recuperarContacto(value){
         
 
          
-               <TouchableOpacity onPress= {()=> this.removeTodos("@misContactosBorrados")}>
-                        <Text> Borrar todos! </Text>
+               <TouchableOpacity style={styles.estiloButton} onPress= {()=> this.removeTodos("@misContactosBorrados")}>
+                        <Text style= {styles.estiloButton}> Borrar todos! </Text>
               </TouchableOpacity>
 
 

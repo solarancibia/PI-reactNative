@@ -8,6 +8,7 @@ import {Cards} from "../components/cards"
 import Asyncstorage from "@react-native-async-storage/async-storage"
 import { Ionicons } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 export  class ContactosImportados extends Component{
   constructor(props){
     super(props);
@@ -250,8 +251,8 @@ text: text
                       <Cards item ={item} />  
                         
                             <TextInput  keyboardType="default"
-                       placeholder="Ingrese algun comentario.."
-                       style={styles.estiloInput}
+                       placeholder="Ingrese algún comentario..."
+                       style={styles.estilocomments}
                        numberOfLines={10}
                        multiline={true}
                       onChangeText={text=> this.setState({comentarios : text})}
@@ -259,18 +260,19 @@ text: text
 
 
                         <TouchableOpacity style= {styles.estiloButtonGhost} onPress= {()=> this.storageComentarios(item)}>
-                              <Text style= {styles.estiloTextoButton}> Guardar comentario </Text>
+                              <Text style= {styles.estiloTextoButtonGhost}> Guardar comentario</Text>
                          </TouchableOpacity>
                             
-                            
-                          <TouchableOpacity onPress= {()=> this.showModal(item)}>
-                          <Ionicons name="ios-eye-outline" size={24} color="black" />
+                            <View style={styles.iconosjuntos}>
+                          <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(item)}>
+                          <Ionicons style= {styles.iconos} name="ios-eye-outline" size={24} color="black" />
                           </TouchableOpacity>
 
 
-                            <TouchableOpacity onPress= {()=> this.borrar(item)}>
-                            <Ionicons name="md-trash-outline" size={24} color="black" />
+                            <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.borrar(item)}>
+                            <MaterialCommunityIcons style= {styles.iconos} name="recycle" size={24} color="black" />
                             </TouchableOpacity>
+                            </View>
                             </View>
                 </View>
             )
