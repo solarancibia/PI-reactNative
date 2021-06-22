@@ -174,13 +174,14 @@ async recuperarContacto(value){
 
 
    
-   
+          
+          <View style={{flex:1}}>   
              <FlatList
                         data= {this.state.contactosBorrados}
                         renderItem={this.renderItem}
                         keyExtractor={this.keyExtractor}
                  /> 
-        
+        </View>
     </View>
 
 
@@ -189,20 +190,3 @@ async recuperarContacto(value){
 }
 
  }
-
-
-/*
- const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 10,
-    },
-    image: {
-        height: 100,
-        width: 100,
-    }
-  });
-  */

@@ -10,6 +10,7 @@ import { StatusBar } from 'expo-status-bar';
 
 
 import {Contact} from "./src/screens/contact"
+import {Acerca} from "./src/screens/acerca"
 import {ContactosImportados} from "./src/screens/contactosImportados"
 import {PapeleraDeReciclaje} from "./src/screens/papeleraDeReciclaje"
 
@@ -24,6 +25,7 @@ class App extends Component {
            <Drawer.Screen name= "Contactos" component={Contact} options= {{title: "Importar contactos"}}  />
            <Drawer.Screen name= "Contactos Importados" component={ContactosImportados} options= {{title: "Mis Contactos"}} />
            <Drawer.Screen name= "Papelera reciclaje" component={PapeleraDeReciclaje} options= {{title: "Papelera"}} />
+           <Drawer.Screen name= "Acerca" component={Acerca} options= {{title: "Acerca de.."}} />
   
   
 

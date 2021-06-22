@@ -6,7 +6,7 @@ import {getData} from "../api/RandomUsers"
 import {Cards} from "../components/cards"
 import {styles} from "../css/estilo"
 import Asyncstorage from "@react-native-async-storage/async-storage"
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 export  class Contact extends Component{
   constructor(props){
     super(props);
@@ -25,8 +25,10 @@ export  class Contact extends Component{
 
 
   componentDidMount () {
+    
     this.unsuscribe = this.props.navigation.addListener( "focus", () => {
-
+      let cantidadDeImportados = this.state.importados.length
+      this.setState({numeroDeImportados: cantidadDeImportados})
       this.getMyContactsStorage();
    })
    
@@ -59,9 +61,9 @@ componentWillUnmount(){
           
             await Asyncstorage.setItem( "@myContacts" , jsonValue)
               
-            
             let cantidadDeImportados = this.state.importados.length
             this.setState({numeroDeImportados: cantidadDeImportados})
+          
             
             let resultado = this.state.contactos.filter ((item) => {
                 return item.login.uuid !== value.login.uuid
@@ -77,9 +79,10 @@ componentWillUnmount(){
  
 
  cargarPersonas() {
-    
+  let cantidadDeImportados = this.state.importados.length
+  
     this.getDataFromApi()
-    this.setState({activity: true})
+    this.setState({activity: true, numeroDeImportados: cantidadDeImportados})
     
  }
 
@@ -110,8 +113,8 @@ componentWillUnmount(){
         renderItem = ({item}) => {
             return (
                 
-                
-                <View >
+             
+             
 
                     
                    <View style={styles.cardcontainer}> 
@@ -129,7 +132,8 @@ componentWillUnmount(){
                       </View>
                            
                            
-                </View>
+            
+               
             )
         }
 
@@ -144,7 +148,7 @@ componentWillUnmount(){
     <View style={styles.container}>
 
 
-                <SafeAreaView>
+               
                 
 
                     <TextInput style= {styles.estiloInput} keyboardType="number-pad"
@@ -160,16 +164,22 @@ componentWillUnmount(){
                 
                 
        
-              <View>  
+              <View style= {{flex: 1}}>  
                             { this.state.activity
 
-                            ? <ActivityIndicator
+                            ? 
+                              <View>
+                            <ActivityIndicator
                                         color= "blue"
                                         size={60}
                                        
                             />  
-                                
+                                     
+                                      <Text> Cargando!</Text>
+                              </View>
+                            
                            :  <FlatList
+                          
                         data= {this.state.contactos}
                         renderItem={this.renderItem}
                         keyExtractor={this.keyExtractor}
@@ -181,7 +191,7 @@ componentWillUnmount(){
               </View>
          
                            
-              </SafeAreaView>
+             
   </View>
 
 
@@ -190,35 +200,7 @@ componentWillUnmount(){
 }
 
 
-/*
- const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 10,
-    },
-    image: {
-        height: 100,
-        width: 100,
-    },
-    touchable: {
-        marginTop: 70,
-    },
-    card: {
-      borderStyle: "solid",
-        borderWidth: 1,
-        borderColor: "grey",
-      backgroundColor:"gainsboro",
-      marginTop: 10,
-      borderRadius: 15,
-      width: "100%"
-
-    }
-
-  });
 
 
 
-  */
+

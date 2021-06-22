@@ -1,14 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput, Modal } from 'react-native';
+import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput, Modal, Animated } from 'react-native';
 import {Component} from "react"
-import {getData} from "../api/RandomUsers"
+
 import {styles} from "../css/estilo"
 import {Cards} from "../components/cards"
+import {DetalleDeContacto} from "../components/detalleDeContacto"
 import Asyncstorage from "@react-native-async-storage/async-storage"
 import { Ionicons } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 export  class ContactosImportados extends Component{
   constructor(props){
     super(props);
@@ -22,11 +24,47 @@ export  class ContactosImportados extends Component{
                 showModal: false,
                 itemModal: null,
                 comentarios: " ",
+                toValue: 1,
+                toPosition: 180,
+              
 
 
     
     }
   }
+
+  position = new Animated.Value(0);
+  topDown = () => {
+    Animated.timing (this.position, {
+            toValue: this.state.toPosition,
+            duration: 1000,
+            useNativeDriver: true,
+    }) .start()
+
+    if(this.state.toPosition === 180 ) { 
+    this.setState({toPosition: this.state.toPosition - 180,})
+  } else {
+    this.setState({toPosition: this.state.toPosition + 180, })
+  }
+}
+
+
+
+
+rotation= new Animated.Value(0);
+
+rotate = () => {
+  Animated.timing(this.rotation, {
+      toValue: this.state.toValue,
+      duration: 1000,
+      useNativeDriver: true,
+  }) .start()
+  this.setState({toValue: this.state.toValue + 1})
+}
+
+
+
+
 
   componentDidMount () {
     this.unsuscribe = this.props.navigation.addListener( "focus", () => {
@@ -241,40 +279,78 @@ text: text
   }
  
         keyExtractor = (item ,idx) => idx.toString();
+    
+        
         renderItem = ({item}) => {
-            return (
+
+          const rotA = this.rotation.interpolate({
+            inputRange: [0,1],
+            outputRange: ["0deg", "180deg"]
+        })
+        const rotB = this.rotation.interpolate({
+          inputRange: [0,1],
+          outputRange: ["180deg", "0deg"]
+        })
+        
+          return (
                 
                 
-               <View style={styles.cardContainer}>
-                      <View style={styles.cardcontainer} > 
+         <View key={item.login.uuid}> 
+                     
+              <TouchableOpacity onPress= {this.rotate} >
+                  
+                       <View> 
+                                 <Animated.View  style={[styles.cardcontainer, {
+                                  backfaceVisibility: "hidden",
+                                   transform: [
+                                    {  rotateX: rotA }  ]
+                                     }]  } > 
                        
-                      <Cards item ={item} />  
+                                         <Cards item ={item} />  
                         
-                            <TextInput  keyboardType="default"
-                       placeholder="Ingrese algún comentario..."
-                       style={styles.estilocomments}
-                       numberOfLines={10}
-                       multiline={true}
-                      onChangeText={text=> this.setState({comentarios : text})}
-                            /> 
+                                          <TextInput  keyboardType="default"
+                                          placeholder="Ingrese algún comentario..."
+                                          style={styles.estilocomments}
+                                          numberOfLines={10}
+                                          multiline={true}
+                                          onChangeText={text=> this.setState({comentarios : text})}
+                                        /> 
 
 
-                        <TouchableOpacity style= {styles.estiloButtonGhost} onPress= {()=> this.storageComentarios(item)}>
-                              <Text style= {styles.estiloTextoButtonGhost}> Guardar comentario</Text>
-                         </TouchableOpacity>
+                                        <TouchableOpacity style= {styles.estiloButtonGhost} onPress= {()=> this.storageComentarios(item)}>
+                                              <Text style= {styles.estiloTextoButtonGhost}> Guardar comentario</Text>
+                                        </TouchableOpacity>
+                                          
+                                          <View style={styles.iconosjuntos}>
+                                        <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(item)}>
+                                        <Ionicons style= {styles.iconos} name="ios-eye-outline" size={24} color="black" />
+                                        </TouchableOpacity>
+
+
+                                        <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.borrar(item)}>
+                                        <MaterialCommunityIcons style= {styles.iconos} name="recycle" size={24} color="black" />
+                                        </TouchableOpacity>
+                                        </View>
+                                        </Animated.View>
+
+                           <Animated.View   style={ [styles.cardcontainer ,  {
+                               position: "absolute",
+                             backfaceVisibility: "hidden",
+                            transform: [
+                            {  rotateX: rotB }  ]
+                      }   ]}  > 
                             
-                            <View style={styles.iconosjuntos}>
-                          <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(item)}>
-                          <Ionicons style= {styles.iconos} name="ios-eye-outline" size={24} color="black" />
-                          </TouchableOpacity>
+                                  <DetalleDeContacto item ={item} />                   
 
+                        </Animated.View>
+                      
+                       </View> 
+              
+                 </TouchableOpacity>  
+                            
+          </View>
 
-                            <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.borrar(item)}>
-                            <MaterialCommunityIcons style= {styles.iconos} name="recycle" size={24} color="black" />
-                            </TouchableOpacity>
-                            </View>
-                            </View>
-                </View>
+               
             )
         }
 
@@ -283,12 +359,25 @@ text: text
 
 
  render() { 
- 
+
 
   return (
 
     <View style={styles.container}>
         
+
+        <Animated.View style ={  { 
+                    backgroundColor: "#231E39",
+                    position: 'relative',
+                    width: 300,
+                    borderRadius:15,
+                    top: -180,
+                    transform: [
+                        {translateY: this.position}
+                    ]
+                }     } >
+
+
        
             <TextInput  keyboardType="default"
                       placeholder="Filtrar por nombre"
@@ -307,12 +396,22 @@ text: text
           /> 
 
 
+</Animated.View>
+
+<TouchableOpacity onPress= {()=> this.topDown()}>
+
+<Text> Activar animacion!</Text>
+</TouchableOpacity>
+
+
+        <View style= {{flex:1, }}> 
               <FlatList
                         data= {this.state.misContactos}
                         renderItem={this.renderItem}
                         keyExtractor={this.keyExtractor}
                /> 
-       
+    </View> 
+   
 
               <Modal
                 visible= {this.state.showModal}
@@ -359,52 +458,3 @@ text: text
 
  }
 
-/*
- const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 10,
-    },
-    estiloInput: {
-        borderWidth: 1, 
-        borderStyle: "solid", 
-        marginTop: 20, 
-        height:50
-    },
-    image: {
-        height: 100,
-        width: 100,
-    },
-    closeButton: {
-        fontSize: 20,
-        position: "absolute",
-        right: 20,
-        top: 10
-    },
-    textModal: {
-        fontSize: 20,
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: "flex-end",
-        alignItems: "center",
-    },
-    modal: {
-        width: "100%" ,
-        height: "70%",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "white",
-        borderTopEndRadius: 20,
-        shadowColor: "black",
-        borderStyle: "solid",
-        borderWidth: 1,
-        borderColor: "grey",
-        elevation: 10
-    }
-  });
-
-  */
