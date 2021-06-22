@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         color:"white", 
         marginTop: 20
     },
-
+   
     estiloDatos:{
         alignSelf: "center",
         marginTop: 5,
@@ -20,9 +20,9 @@ const styles = StyleSheet.create({
     estiloInput: {
         borderWidth: 1, 
         borderStyle: "solid", 
-        marginTop: 10, 
+        marginTop: 20, 
         height:40,
-        width: 150,
+        width: 300,
         borderRadius:5,
         backgroundColor: "rgb(205, 205, 205)",
         padding: 10,
@@ -78,15 +78,22 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 10,
         backgroundColor: "#231E39",
       },
 
-    
+      botonesiconos: {
+          width:40,
+          height:40,
+          borderWidth: 3,
+          borderColor: "#03BFCB",
+          borderRadius: 50,
+          marginRight:5,
+          alignSelf:"center",
+      },
 
       iconosjuntos:{
-        width: 30,
-        height: 30,
+        width: 50,
+        height: 50,
         flexDirection: "row",
         alignSelf:"center",
         
@@ -111,17 +118,6 @@ const styles = StyleSheet.create({
           marginTop: 70,
       },
 
-    //   card: {
-    //     borderStyle: "solid",
-    //     borderWidth: 1,
-    //     borderColor: "grey",
-    //     backgroundColor:"gainsboro",
-    //     marginTop: 10,
-    //     borderRadius: 15,
-    //     width: "100%"
-  
-    //   },
-
       cardcontainer: {
         backgroundColor: "#ffffff",
         borderRadius: 5,
@@ -130,9 +126,32 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginBottom: 5,
         marginTop: 10,
+        minWidth: 200,
+        maxWidth:200,
+        
+        
+             
     },
+    nosotroscontainer: {
+        backgroundColor: "#ffffff",
+        borderRadius: 5,
+        shadowColor: "rgba(0,0,0,0.75)", 
+        textAlign: "center",
+        position: 'relative',
+        bottom: 500,                    
+         marginTop: 20,
+         alignSelf: "center",
+         minHeight: 100,
+         minWidth:200,
+         maxWidth: 200,
+        
+       
       
-  
+        
+        
+             
+    },
+     
       closeButton: {
         fontSize: 20,
         position: "absolute",
