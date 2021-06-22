@@ -3,6 +3,7 @@ import React from 'react';
 
 // import { useFonts, Montserrat_500 } from '@expo-google-fonts/inter';
 
+
 const styles = StyleSheet.create({
 
     estiloTexto: {
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
     estilocomment:{
         backgroundColor: "rgb(205, 205, 205)",
         width:50,
+        height:60,
     },
 
     estiloButton: {
