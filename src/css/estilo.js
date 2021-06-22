@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     estilocomment:{
         backgroundColor: "rgb(205, 205, 205)",
         width:50,
-        height:60,
     },
 
     estiloButton: {
