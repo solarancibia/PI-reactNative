@@ -51,6 +51,7 @@ export  class Acerca extends Component{
  <View style={{ backgroundColor: "#231E39", flex: 1 }}> 
 
  <Text style={{fontSize:40, color:"white"}}> ¿Quienes somos?</Text>
+ <Text style={{fontSize:40, color:"white"}}> ¿Quienes somos?</Text>
    {
             this.state.nosotros.map((item, key) => {
                      
