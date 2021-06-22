@@ -62,7 +62,7 @@ async removeTodos (key){
     
 }
 
-  async getBorrados () {
+async getBorrados () {
    
     try{
 
