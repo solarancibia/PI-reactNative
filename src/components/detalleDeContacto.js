@@ -17,8 +17,7 @@ export  class DetalleDeContacto extends Component{
 
                 <>
                 <Image style={styles.image} source={{uri: this.props.item.picture.large} } />
-                <Text style={styles.estiloDatos}> {this.props.item.name.first}</Text> 
-                <Text style={styles.estiloDatos} > {this.props.item.name.last}</Text> 
+                <Text style={styles.estiloDatos}> {this.props.item.name.first} {this.props.item.name.last}</Text> 
                 <Text  style={styles.estiloDatos}>  {this.props.item.dob.date.substring(0,10)} - {this.props.item.dob.age} años </Text> 
                 <Text style={styles.estiloDatos}> {this.props.item.location.street.name} {this.props.item.location.street.number } </Text> 
                  

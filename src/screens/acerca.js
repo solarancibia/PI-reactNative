@@ -51,14 +51,14 @@ export  class Acerca extends Component{
  <View style={{ backgroundColor: "#231E39", flex: 1 }}> 
 
  <Text style={{fontSize:40, color:"white"}}> ¿Quienes somos?</Text>
- <Text style={{fontSize:40, color:"white"}}> ¿Quienes somos?</Text>
+ 
    {
             this.state.nosotros.map((item, key) => {
                      
                   
              
 
-              return (        <Nosotros item={item} delay={800* item.id} key={key} /> 
+              return (        <Nosotros style={styles.estiloTexto} item={item} delay={800* item.id} key={key} /> 
 
                 )
              

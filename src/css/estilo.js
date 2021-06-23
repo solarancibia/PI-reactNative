@@ -20,18 +20,31 @@ const styles = StyleSheet.create({
     estiloInput: {
         borderWidth: 1, 
         borderStyle: "solid", 
+        borderColor:"#ffffff",
         marginTop: 20, 
         height:40,
         width: 300,
         borderRadius:5,
-        backgroundColor: "rgb(205, 205, 205)",
+        backgroundColor: "transparent",
+        padding: 10,
+    },
+
+    estiloInputPpal: {
+        borderWidth: 1, 
+        borderStyle: "solid", 
+        borderColor:"#ffffff",
+        marginTop: 50, 
+        height:40,
+        width: 300,
+        borderRadius:5,
+        backgroundColor: "transparent",
         padding: 10,
     },
 
     estilocomment:{
-        backgroundColor: "rgb(205, 205, 205)",
-        width:50,
-        height:60,
+        backgroundColor: "transparent",
+        width:220,
+        alignSelf:"center",
     },
 
     estiloButton: {
@@ -43,6 +56,8 @@ const styles = StyleSheet.create({
         padding: 10,
         color: "#ffffff",
     },
+
+
     estiloButtonGhost: {
         backgroundColor: "transparent",
         borderWidth: 1,
@@ -56,6 +71,18 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     
+    estiloButtonBorrado: {
+        backgroundColor: "transparent",
+        borderWidth: 1,
+        borderRadius: 5,
+        borderStyle: "solid",
+        borderColor: "#03BFCB",
+        padding: 10,
+        width: 170,
+        alignSelf: 'center',
+        marginBottom: 10,
+        marginTop: 40,
+    },
 
     estiloTextoButton:{
         color: "#ffffff",
@@ -83,21 +110,24 @@ const styles = StyleSheet.create({
       },
 
       botonesiconos: {
-          width:40,
-          height:40,
-          borderWidth: 3,
-          borderColor: "#03BFCB",
-          borderRadius: 50,
-          marginRight:5,
+          height: 30,
+          width: 80,
+          borderWidth: 5,
+          borderColor: "#ffffff",
           alignSelf:"center",
+          marginBottom: 10,
       },
 
       iconosjuntos:{
-        width: 50,
-        height: 50,
         flexDirection: "row",
         alignSelf:"center",
         
+      },
+
+      cargarPersonas:{
+        paddingLeft: 5,
+        height:35,
+        marginTop: 55, 
       },
 
       tacho:{
@@ -127,8 +157,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginBottom: 5,
         marginTop: 10,
-        minWidth: 200,
-        maxWidth:200,
+        minWidth: 250,
+        maxWidth:250,
         
         
              

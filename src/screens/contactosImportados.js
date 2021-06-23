@@ -9,6 +9,7 @@ import {DetalleDeContacto} from "../components/detalleDeContacto"
 import Asyncstorage from "@react-native-async-storage/async-storage"
 import { Ionicons } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 export  class ContactosImportados extends Component{
@@ -309,7 +310,7 @@ text: text
                         
                                           <TextInput  keyboardType="default"
                                           placeholder="Ingrese algún comentario..."
-                                          style={styles.estilocomments}
+                                          style={styles.estilocomment}
                                           numberOfLines={10}
                                           multiline={true}
                                           onChangeText={text=> this.setState({comentarios : text})}
@@ -320,14 +321,14 @@ text: text
                                               <Text style= {styles.estiloTextoButtonGhost}> Guardar comentario</Text>
                                         </TouchableOpacity>
                                           
-                                          <View style={styles.iconosjuntos}>
-                                        <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(item)}>
+                                          <View>
+                                        {/* <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(item)}>
                                         <Ionicons style= {styles.iconos} name="ios-eye-outline" size={24} color="black" />
-                                        </TouchableOpacity>
+                                        </TouchableOpacity> */}
 
 
                                         <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.borrar(item)}>
-                                        <MaterialCommunityIcons style= {styles.iconos} name="recycle" size={24} color="black" />
+                                        <MaterialCommunityIcons style= {styles.iconos} name="recycle" size={24} color="teal" />
                                         </TouchableOpacity>
                                         </View>
                                  </Animated.View>
@@ -379,16 +380,19 @@ text: text
        
             <TextInput  keyboardType="default"
                       placeholder="Filtrar por nombre"
+                      placeholderTextColor={'white'}
                       style={styles.estiloInput}
                       onChangeText={(text) => this.searchFirstName(text) }
           /> 
             <TextInput  keyboardType="default"
                       placeholder="Filtrar por apellido"
+                      placeholderTextColor={'white'}
                       style={styles.estiloInput}
                       onChangeText={(text) => this.searchLastName(text) }
           /> 
            <TextInput  keyboardType="number-pad"
                       placeholder="Filtrar por edad"
+                      placeholderTextColor={'white'}
                       style={styles.estiloInput}
                       onChangeText={(text) => this.searchAge(text) }
           /> 
@@ -398,7 +402,7 @@ text: text
 
 <TouchableOpacity style={{marginTop: 20}} onPress= {()=> this.topDown()}>
 
-<Text> Activar animacion!</Text>
+<Text> <AntDesign name="filter" size={24} color="white" /></Text>
 </TouchableOpacity>
 
 
