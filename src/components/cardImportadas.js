@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import {DetalleDeContacto} from "./detalleDeContacto"
+import Asyncstorage from "@react-native-async-storage/async-storage"
 import {Cards} from "./cards"
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 export  class CardImportadas extends Component{
@@ -15,6 +16,7 @@ export  class CardImportadas extends Component{
     this.state = {
         comentarios: " ",
         toValue: 1,
+      
     }
   }
   
@@ -29,11 +31,9 @@ export  class CardImportadas extends Component{
     }) .start()
     this.setState({toValue: this.state.toValue + 1})
   }
-  async storageComentarios (value) {
+ /*  async storageComentarios (value) {
     try{
-       
-        
-    
+              
    Object.assign(value, 
             {
                 comentarios: this.state.comentarios  });
@@ -46,7 +46,7 @@ export  class CardImportadas extends Component{
       console.log(error);
     }
   }
-  
+  */
       
   render() { 
 
@@ -63,12 +63,14 @@ export  class CardImportadas extends Component{
             return (
                 
 
-              <>
+              
+              <View styles={styles.containerPrueba}>
     <TouchableOpacity key={this.props.item.login.uuid} onPress= {this.rotate} >
                   
                   <View> 
                        <Animated.View  style={[styles.cardcontainer, {
                              backfaceVisibility: "hidden",
+                             zIndex:1,
                               transform: [
                                {  rotateX: rotA }  ]
                                 }]  } > 
@@ -76,6 +78,8 @@ export  class CardImportadas extends Component{
                                     <Cards item ={this.props.item} />  
                    
                                      <TextInput  keyboardType="default"
+                                     position= "relative"
+                                     zIndex={2}
                                      placeholder="Ingrese algún comentario..."
                                      style={styles.estilocomment}
                                      numberOfLines={10}
@@ -84,7 +88,7 @@ export  class CardImportadas extends Component{
                                    /> 
 
 
-                                   <TouchableOpacity style= {styles.estiloButtonGhost} onPress= {()=> this.storageComentarios(this.props.item)}>
+                                   <TouchableOpacity style= {styles.estiloButtonGhost} onPress={this.props.pasarComentario.bind(this,  this.props.item, this.state.comentarios)}>
                                          <Text style= {styles.estiloTextoButtonGhost}> Guardar comentario</Text>
                                    </TouchableOpacity>
                                      
@@ -116,8 +120,8 @@ export  class CardImportadas extends Component{
             </TouchableOpacity>  
  
                           
-                        </>
-                          
+                       
+                        </View>
       
                         
                    

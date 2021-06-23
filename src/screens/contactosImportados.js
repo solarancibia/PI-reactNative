@@ -104,7 +104,6 @@ showModal (item){
     this.setState({itemModal: item, showModal: !this.state.showModal})
 }
 
-
   borrar = async (value)  => {
     try {        alert("El contacto se mando a la papelera de reciclaje")
           
@@ -263,14 +262,14 @@ text: text
     }
   }
 
-  /* async storageComentarios (value) {
+    storageComentarios = async (value, comentarios) => {
     try{
        
         
     
    Object.assign(value, 
             {
-                comentarios: this.state.comentarios  });
+                comentarios: comentarios  });
           
                 const jsonValue = JSON.stringify(this.state.misContactos)
                 await Asyncstorage.setItem( "@myContacts" , jsonValue)
@@ -280,14 +279,14 @@ text: text
       console.log(error);
     }
   }
- */
+ 
         keyExtractor = (item ,idx) => idx.toString();
     
         
         renderItem = ({item}) => {
 
               return ( 
-                          <CardImportadas item= {item} pasarBorrar={this.borrar} />
+                          <CardImportadas item= {item} pasarComentario={this.storageComentarios} pasarBorrar={this.borrar} />
 
                           )
           /*
