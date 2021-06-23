@@ -20,17 +20,19 @@ const styles = StyleSheet.create({
     estiloInput: {
         borderWidth: 1, 
         borderStyle: "solid", 
+        borderColor:"#ffffff",
         marginTop: 20, 
         height:40,
         width: 300,
         borderRadius:5,
-        backgroundColor: "rgb(205, 205, 205)",
+        backgroundColor: "transparent",
         padding: 10,
     },
 
     estilocomment:{
-        backgroundColor: "rgb(205, 205, 205)",
-        width:50,
+        backgroundColor: "transparent",
+        width:220,
+        alignSelf:"center",
     },
 
     estiloButton: {
@@ -82,21 +84,25 @@ const styles = StyleSheet.create({
       },
 
       botonesiconos: {
-          width:40,
-          height:40,
-          borderWidth: 3,
-          borderColor: "#03BFCB",
-          borderRadius: 50,
-          marginRight:5,
+          height: 30,
+          width: 80,
+          borderWidth: 5,
+          borderColor: "#ffffff",
           alignSelf:"center",
+          marginBottom: 10,
       },
 
       iconosjuntos:{
-        width: 50,
-        height: 50,
         flexDirection: "row",
         alignSelf:"center",
         
+      },
+
+      cargarPersonas:{
+     
+        
+        height:35,
+        marginTop: 25, 
       },
 
       tacho:{
@@ -126,8 +132,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginBottom: 5,
         marginTop: 10,
-        minWidth: 200,
-        maxWidth:200,
+        minWidth: 250,
+        maxWidth:250,
         
         
              

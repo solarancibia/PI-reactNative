@@ -5,6 +5,8 @@ import {Component} from "react"
 import {getData} from "../api/RandomUsers"
 import {Cards} from "../components/cards"
 import {styles} from "../css/estilo"
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Asyncstorage from "@react-native-async-storage/async-storage"
 
 export  class Contact extends Component{
@@ -149,18 +151,23 @@ componentWillUnmount(){
 
 
                
-                
+                <View style={styles.iconosjuntos}>
 
                     <TextInput style= {styles.estiloInput} keyboardType="number-pad"
                       placeholder="Ingresa la cantidad de personas"
+                      placeholderTextColor={'white'}
                     onChangeText={text=> this.setState({numeroDePersonas : text})}
                     /> 
-           
-                
-                    <Text style= {styles.estiloTextoButton}> Cantidad de importados : {this.state.numeroDeImportados} </Text>
-                    <TouchableOpacity style= {styles.estiloButton} onPress={this.cargarPersonas.bind(this)}>
-                       <Text style= {styles.estiloTextoButton}>Cargar personas </Text>
+                    <TouchableOpacity  style={styles.cargarPersonas} onPress={this.cargarPersonas.bind(this)}>
+                       <Text> <MaterialCommunityIcons name="account-plus-outline" size={30} color="white" /> </Text>
                     </TouchableOpacity>
+                 </View>
+           
+                <TouchableOpacity disabled={true} style= {styles.estiloButton}>
+                    <Text style= {styles.estiloTextoButton}> <AntDesign name="contacts" size={20} color="teal" /> : {this.state.numeroDeImportados} </Text>
+                    </TouchableOpacity>
+                    
+                    
                 
                 
        
