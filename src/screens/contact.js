@@ -153,7 +153,7 @@ componentWillUnmount(){
                
                 <View style={styles.iconosjuntos}>
 
-                    <TextInput style= {styles.estiloInput} keyboardType="number-pad"
+                    <TextInput style= {styles.estiloInputPpal} keyboardType="number-pad"
                       placeholder="Ingresa la cantidad de personas"
                       placeholderTextColor={'white'}
                     onChangeText={text=> this.setState({numeroDePersonas : text})}

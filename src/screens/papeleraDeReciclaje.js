@@ -167,7 +167,7 @@ async recuperarContacto(value){
         
 
          
-               <TouchableOpacity style={styles.estiloButtonGhost} onPress= {()=> this.removeTodos("@misContactosBorrados")}>
+               <TouchableOpacity style={styles.estiloButtonBorrado} onPress= {()=> this.removeTodos("@misContactosBorrados")}>
                         <Text style= {styles.estiloTextoButton}> Borrar todos</Text>
               </TouchableOpacity>
 

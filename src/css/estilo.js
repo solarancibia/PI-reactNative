@@ -29,6 +29,18 @@ const styles = StyleSheet.create({
         padding: 10,
     },
 
+    estiloInputPpal: {
+        borderWidth: 1, 
+        borderStyle: "solid", 
+        borderColor:"#ffffff",
+        marginTop: 50, 
+        height:40,
+        width: 300,
+        borderRadius:5,
+        backgroundColor: "transparent",
+        padding: 10,
+    },
+
     estilocomment:{
         backgroundColor: "transparent",
         width:220,
@@ -44,6 +56,8 @@ const styles = StyleSheet.create({
         padding: 10,
         color: "#ffffff",
     },
+
+
     estiloButtonGhost: {
         backgroundColor: "transparent",
         borderWidth: 1,
@@ -54,9 +68,21 @@ const styles = StyleSheet.create({
         width: 170,
         alignSelf: 'center',
         marginBottom: 10,
-        marginTop: 20,
+        marginTop: 10,
     },
     
+    estiloButtonBorrado: {
+        backgroundColor: "transparent",
+        borderWidth: 1,
+        borderRadius: 5,
+        borderStyle: "solid",
+        borderColor: "#03BFCB",
+        padding: 10,
+        width: 170,
+        alignSelf: 'center',
+        marginBottom: 10,
+        marginTop: 40,
+    },
 
     estiloTextoButton:{
         color: "#ffffff",
@@ -99,10 +125,9 @@ const styles = StyleSheet.create({
       },
 
       cargarPersonas:{
-     
-        
+        paddingLeft: 5,
         height:35,
-        marginTop: 25, 
+        marginTop: 55, 
       },
 
       tacho:{
