@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         width:220,
         alignSelf:"center",
+        zIndex: 5,
+        position: "relative",
     },
 
     estiloButton: {
@@ -69,6 +71,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginBottom: 10,
         marginTop: 10,
+        zIndex: 5,
+        position: "relative",
     },
     
     estiloButtonBorrado: {
@@ -159,10 +163,13 @@ const styles = StyleSheet.create({
         marginTop: 10,
         minWidth: 250,
         maxWidth:250,
-        
-        
-             
+           
     },
+
+    containerPrueba:{
+        zIndex: 1, 
+    },
+
     nosotroscontainer: {
         backgroundColor: "#ffffff",
         borderRadius: 5,

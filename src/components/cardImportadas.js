@@ -63,12 +63,14 @@ export  class CardImportadas extends Component{
             return (
                 
 
-              <>
+              
+              <View styles={styles.containerPrueba}>
     <TouchableOpacity key={this.props.item.login.uuid} onPress= {this.rotate} >
                   
                   <View> 
                        <Animated.View  style={[styles.cardcontainer, {
                              backfaceVisibility: "hidden",
+                             zIndex:1,
                               transform: [
                                {  rotateX: rotA }  ]
                                 }]  } > 
@@ -76,6 +78,8 @@ export  class CardImportadas extends Component{
                                     <Cards item ={this.props.item} />  
                    
                                      <TextInput  keyboardType="default"
+                                     position= "relative"
+                                     zIndex={2}
                                      placeholder="Ingrese algún comentario..."
                                      style={styles.estilocomment}
                                      numberOfLines={10}
@@ -116,8 +120,8 @@ export  class CardImportadas extends Component{
             </TouchableOpacity>  
  
                           
-                        </>
-                          
+                       
+                        </View>
       
                         
                    
