@@ -73,7 +73,7 @@ rotate = () => {
 
       this.getMyContactsStorage();
       this.getBorrados();
-      this.guardarBorradosLocalmente();
+      
    })
    
 }
@@ -103,21 +103,8 @@ async getBorrados () {
 showModal (item){
     this.setState({itemModal: item, showModal: !this.state.showModal})
 }
-async guardarBorradosLocalmente (){
-try {
-               const borrados = JSON.stringify(this.state.contactosBorrados)
-         await Asyncstorage.setItem( "@misContactosBorrados" , borrados)
-
-             const jsonValue = JSON.stringify(this.state.misContactos)
-          
-             await Asyncstorage.setItem( "@myContacts" , jsonValue)
 
 
-}catch (error){
-  console.log(error);
-}
-
-}
   borrar = async (value)  => {
     try {        alert("El contacto se mando a la papelera de reciclaje")
           
