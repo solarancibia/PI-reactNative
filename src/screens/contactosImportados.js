@@ -6,6 +6,7 @@ import {Component} from "react"
 import {styles} from "../css/estilo"
 import {Cards} from "../components/cards"
 import {DetalleDeContacto} from "../components/detalleDeContacto"
+import {CardImportadas} from "../components/cardImportadas"
 import Asyncstorage from "@react-native-async-storage/async-storage"
 import { Ionicons } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
@@ -51,7 +52,7 @@ export  class ContactosImportados extends Component{
 
 
 
-
+/*
 rotation= new Animated.Value(0);
 
 rotate = () => {
@@ -64,7 +65,7 @@ rotate = () => {
 }
 
 
-
+*/
 
 
   componentDidMount () {
@@ -72,6 +73,7 @@ rotate = () => {
 
       this.getMyContactsStorage();
       this.getBorrados();
+      this.guardarBorradosLocalmente();
    })
    
 }
@@ -101,31 +103,44 @@ async getBorrados () {
 showModal (item){
     this.setState({itemModal: item, showModal: !this.state.showModal})
 }
+async guardarBorradosLocalmente (){
+try {
+               const borrados = JSON.stringify(this.state.contactosBorrados)
+         await Asyncstorage.setItem( "@misContactosBorrados" , borrados)
 
- async borrar(value){
+             const jsonValue = JSON.stringify(this.state.misContactos)
+          
+             await Asyncstorage.setItem( "@myContacts" , jsonValue)
 
-    try{
-    
-            alert("El contacto se mando a la papelera de reciclaje")
+
+}catch (error){
+  console.log(error);
+}
+
+}
+  borrar = async (value)  => {
+    try {        alert("El contacto se mando a la papelera de reciclaje")
           
             this.state.contactosBorrados.push(value)
-            const borrados = JSON.stringify(this.state.contactosBorrados)
-            await Asyncstorage.setItem( "@misContactosBorrados" , borrados)
+           const borrados = JSON.stringify(this.state.contactosBorrados)
+           await Asyncstorage.setItem( "@misContactosBorrados" , borrados)
 
             let resultado = this.state.misContactos.filter ((item) => {
               return item.login.uuid !== value.login.uuid
             })
              this.setState({misContactos:resultado})
 
-            const jsonValue = JSON.stringify(resultado)
-             await Asyncstorage.setItem( "@myContacts" , jsonValue)
+          const jsonValue = JSON.stringify(resultado)
+           await Asyncstorage.setItem( "@myContacts" , jsonValue)
           
              
 
-    }catch (error){
-      console.log(error);
-    }
-
+  //  }catch (error){
+   //   console.log(error);
+  //  }
+}catch (error){
+  console.log(error);
+}
     };   
 
  searchFirstName(text) {
@@ -261,7 +276,7 @@ text: text
     }
   }
 
-  async storageComentarios (value) {
+  /* async storageComentarios (value) {
     try{
        
         
@@ -278,12 +293,17 @@ text: text
       console.log(error);
     }
   }
- 
+ */
         keyExtractor = (item ,idx) => idx.toString();
     
         
         renderItem = ({item}) => {
 
+              return ( 
+                          <CardImportadas item= {item} pasarBorrar={this.borrar} />
+
+                          )
+          /*
           const rotA = this.rotation.interpolate({
             inputRange: [0,1],
             outputRange: ["0deg", "180deg"]
@@ -322,9 +342,9 @@ text: text
                                         </TouchableOpacity>
                                           
                                           <View>
-                                        {/* <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(item)}>
+                                        { <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(item)}>
                                         <Ionicons style= {styles.iconos} name="ios-eye-outline" size={24} color="black" />
-                                        </TouchableOpacity> */}
+                                        </TouchableOpacity> 
 
 
                                         <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.borrar(item)}>
@@ -351,7 +371,10 @@ text: text
 
                
             )
-        }
+       
+       */
+       
+          }
 
        
 
