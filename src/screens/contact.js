@@ -163,7 +163,7 @@ componentWillUnmount(){
                     </TouchableOpacity>
                  </View>
            
-                <TouchableOpacity disabled={true} style= {styles.estiloButton}>
+                <TouchableOpacity disabled={true} style= {styles.estiloButtonGhost}>
                     <Text style= {styles.estiloTextoButton}> <AntDesign name="contacts" size={20} color="teal" /> : {this.state.numeroDeImportados} </Text>
                     </TouchableOpacity>
                     
