@@ -295,12 +295,11 @@ text: text
           return (
                 
                 
-         <View key={item.login.uuid}> 
-                     
-              <TouchableOpacity onPress= {this.rotate} >
+         
+              <TouchableOpacity key={item.login.uuid} onPress= {this.rotate} >
                   
                        <View> 
-                                 <Animated.View  style={[styles.cardcontainer, {
+                            <Animated.View  style={[styles.cardcontainer, {
                                   backfaceVisibility: "hidden",
                                    transform: [
                                     {  rotateX: rotA }  ]
@@ -331,24 +330,23 @@ text: text
                                         <MaterialCommunityIcons style= {styles.iconos} name="recycle" size={24} color="black" />
                                         </TouchableOpacity>
                                         </View>
-                                        </Animated.View>
+                                 </Animated.View>
 
-                           <Animated.View   style={ [styles.cardcontainer ,  {
-                               position: "absolute",
-                             backfaceVisibility: "hidden",
-                            transform: [
-                            {  rotateX: rotB }  ]
-                      }   ]}  > 
+                                <Animated.View   style={ [styles.cardcontainer ,  {
+                                                position: "absolute",
+                                              backfaceVisibility: "hidden",
+                                              transform: [
+                                              {  rotateX: rotB }  ]
+                                        }   ]}  > 
                             
-                                  <DetalleDeContacto item ={item} />                   
+                                             <DetalleDeContacto item ={item} />                   
 
-                        </Animated.View>
+                               </Animated.View>
                       
                        </View> 
               
                  </TouchableOpacity>  
-                            
-          </View>
+      
 
                
             )
@@ -366,16 +364,16 @@ text: text
     <View style={styles.container}>
         
 
-        <Animated.View style ={  { 
+        <Animated.View style ={ [ styles.container , { 
                     backgroundColor: "#231E39",
                     position: 'relative',
-                    width: 300,
+                   top: -180,
                     borderRadius:15,
-                    top: -180,
+                    
                     transform: [
                         {translateY: this.position}
                     ]
-                }     } >
+                  } ] }  >
 
 
        
@@ -396,9 +394,9 @@ text: text
           /> 
 
 
-</Animated.View>
 
-<TouchableOpacity onPress= {()=> this.topDown()}>
+
+<TouchableOpacity style={{marginTop: 20}} onPress= {()=> this.topDown()}>
 
 <Text> Activar animacion!</Text>
 </TouchableOpacity>
@@ -448,7 +446,7 @@ text: text
             </View>
                   </Modal>
       
-        
+                  </Animated.View>
   </View>
 
 
