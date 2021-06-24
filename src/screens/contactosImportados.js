@@ -377,7 +377,7 @@ text: text
         <Animated.View style ={ [ styles.container , { 
                     backgroundColor: "#231E39",
                     position: 'relative',
-                   top: -180,
+                    top: -180,
                     borderRadius:15,
                     
                     transform: [
@@ -437,7 +437,7 @@ text: text
 
                 ? 
             <>
-                <Image style= {{width: 100, height: 100}} source={{uri: this.state.itemModal.picture.thumbnail} } />
+                <Image style= {{width: 100, height: 100}} source={{uri: this.state.itemModal.picture.large} } />
                 <Text style= {styles.textModal}> {this.state.itemModal.name.first}</Text> 
                 <Text style= {styles.textModal}> {this.state.itemModal.name.last}</Text> 
                 <Text style= {styles.textModal}>  {this.state.itemModal.dob.date.substring(0,10)} - {this.state.itemModal.dob.age} años </Text> 

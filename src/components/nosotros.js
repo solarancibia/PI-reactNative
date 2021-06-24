@@ -52,8 +52,9 @@ componentDidMount (){
                             {translateY: this.position}
                         ]
                     }  ]   } >
-
-                        <Text style={{ color: "black", fontSize: 20,}}> {this.props.item.nombre}  {this.props.item.apellido}</Text>
+                        {/* <Image style={{width: 150, height:150, borderRadius:100, alignSelf:"center", marginTop:20}} source={require( "./Gallardo.jpg")}    /> */}
+                        <Text style={{ color: "black", alignSelf: "center", fontSize: 20, marginTop:10}}> {this.props.item.nombre} {this.props.item.apellido}</Text>
+                        <Text></Text>
                        
                         <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(this.props.item)}>
                           <Ionicons style= {styles.iconos} name="ios-eye-outline" size={24} color="black" />
