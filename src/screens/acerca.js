@@ -16,6 +16,7 @@ export  class Acerca extends Component{
                 apellido: "Marcogliese",
                 edad: 20,
                 date:"15/01/2001",
+                image: "https://www.mvp2kcaribe.com/uploads/monthly_2017_08/L.png.07e2aabcbdfc1424952af32245ba6729.png",
                
                 id: 1,  },
                 {
@@ -23,6 +24,7 @@ export  class Acerca extends Component{
                     apellido: "R. Arancibia",
                     edad: 20,
                     date: "16/01/2001",
+                    image: "https://static.wikia.nocookie.net/scott-the-woz/images/f/f4/ScottsStash2015.png/revision/latest?cb=20201129124027",
                     id: 2,
                 },
                 {
@@ -30,6 +32,7 @@ export  class Acerca extends Component{
                     apellido: "Sigmaringo",
                     edad: 21,
                     date: "20/07/1999",
+                    image:"https://studiosol-a.akamaihd.net/uploadfile/cifraclub/avatar/7/9/49oitymwbwz.jpg",
                     id: 3,
                 }
             

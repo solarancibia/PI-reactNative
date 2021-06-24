@@ -151,6 +151,16 @@ const styles = StyleSheet.create({
 
       },
 
+      imagenAcerca: {
+        height: 40,
+        width: 40,
+        alignSelf: 'center',
+        borderRadius: 50,
+        padding: 7,
+        marginTop:5,
+
+     },
+
       touchable: {
           marginTop: 70,
       },
@@ -197,7 +207,8 @@ const styles = StyleSheet.create({
         top: 10
     },
     textModal: {
-        fontSize: 20,
+        fontSize: 15,
+        
     },
     modalContainer: {
         flex: 1,
@@ -206,15 +217,15 @@ const styles = StyleSheet.create({
     },
     modal: {
         width: "100%" ,
-        height: "70%",
+        height: "20%",
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "white",
         borderTopEndRadius: 20,
         shadowColor: "black",
         borderStyle: "solid",
-        borderWidth: 1,
-        borderColor: "grey",
+        borderWidth: 2,
+        borderColor: "#03BFCB",
         elevation: 10
     },
    
