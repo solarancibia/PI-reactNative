@@ -371,22 +371,17 @@ text: text
 
   return (
 
-    <View style={styles.container}>
-        
+   
+      
 
         <Animated.View style ={ [ styles.container , { 
-                    backgroundColor: "#231E39",
-                    position: 'relative',
+                      width: "100%",
+                    position: 'absolute',
                    top: -180,
-                    borderRadius:15,
-                    
                     transform: [
                         {translateY: this.position}
                     ]
                   } ] }  >
-
-
-       
             <TextInput  keyboardType="default"
                       placeholder="Filtrar por nombre"
                       placeholderTextColor={'white'}
@@ -406,61 +401,26 @@ text: text
                       onChangeText={(text) => this.searchAge(text) }
           /> 
 
-
-
-
 <TouchableOpacity style={{marginTop: 20}} onPress= {()=> this.topDown()}>
 
 <Text> <AntDesign name="filter" size={24} color="white" /></Text>
 </TouchableOpacity>
-
-
-        <View style= {{flex:1, }}> 
+             
+             
+             
+                    <View style={{flex:1,}}> 
               <FlatList
-                        data= {this.state.misContactos}
+
+                        style={{flex:2}}
+                       data= {this.state.misContactos}
                         renderItem={this.renderItem}
                         keyExtractor={this.keyExtractor}
                /> 
-    </View> 
-   
-
-              <Modal
-                visible= {this.state.showModal}
-                animationType= "slide"
-                transparent ={true}
-        >
-
-      <View style= {styles.modalContainer}>
-           <View style= {styles.modal}>
-
-             {      this.state.itemModal
-
-                ? 
-            <>
-                <Image style= {{width: 100, height: 100}} source={{uri: this.state.itemModal.picture.thumbnail} } />
-                <Text style= {styles.textModal}> {this.state.itemModal.name.first}</Text> 
-                <Text style= {styles.textModal}> {this.state.itemModal.name.last}</Text> 
-                <Text style= {styles.textModal}>  {this.state.itemModal.dob.date.substring(0,10)} - {this.state.itemModal.dob.age} años </Text> 
-                <Text style= {styles.textModal}> {this.state.itemModal.location.street.name} {this.state.itemModal.location.street.number } </Text> 
-                <Text style= {styles.textModal}> {this.state.itemModal.location.state} {this.state.itemModal.location.city} {this.state.itemModal.location.country} {this.state.itemModal.location.postcode} </Text> 
-                <Text style= {styles.textModal}> {this.state.itemModal.registered.date.substring(0,10)}</Text> 
-                <Text style= {styles.textModal}> {this.state.itemModal.phone}</Text>
-                <Text style= {styles.textModal}> {this.state.itemModal.comentarios}</Text> 
-
-
-           </>
-      
-                : <Text>No hay nada</Text>
-
-    }
-             <Text style= {styles.closeButton}  onPress= {() => this.setState({showModal: false})} >  <EvilIcons name="close" size={24} color="black" /> </Text> 
-
-      </View>
-            </View>
-                  </Modal>
-      
-                  </Animated.View>
   </View>
+      </Animated.View>
+     
+          
+          
 
 
   

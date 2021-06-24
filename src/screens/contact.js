@@ -8,6 +8,9 @@ import {styles} from "../css/estilo"
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Asyncstorage from "@react-native-async-storage/async-storage"
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Entypo } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export  class Contact extends Component{
   constructor(props){
@@ -147,8 +150,26 @@ componentWillUnmount(){
 
   return (
 
-    <View style={styles.container}>
 
+   <>
+  <SafeAreaView style={styles.topSafeArea} />
+            
+            <SafeAreaView style={styles.container}>
+               
+               
+                <StatusBar barStyle="light-content" />
+              
+           
+
+  
+                <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0,}}>
+
+                                  
+                                        <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
+                                            <Text> <Entypo name="menu" size={24} color="white" /></Text>
+                                            </TouchableOpacity>
+                                  
+                </View>
 
                
                 <View style={styles.iconosjuntos}>
@@ -199,10 +220,10 @@ componentWillUnmount(){
          
                            
              
-  </View>
-
-
-  
+              
+                            
+              </SafeAreaView>
+  </>
   )}
 }
 

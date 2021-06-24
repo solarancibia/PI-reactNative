@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         borderWidth: 1, 
         borderStyle: "solid", 
         borderColor:"#ffffff",
-        marginTop: 50, 
+        marginTop: 25, 
         height:40,
         width: 300,
         borderRadius:5,
@@ -119,8 +119,13 @@ const styles = StyleSheet.create({
           borderWidth: 5,
           borderColor: "#ffffff",
           alignSelf:"center",
-          marginBottom: 10,
+            
       },
+      topSafeArea: {
+        flex: 0, 
+        backgroundColor: "#03BFCB"
+      },
+    
 
       iconosjuntos:{
         flexDirection: "row",
@@ -131,7 +136,7 @@ const styles = StyleSheet.create({
       cargarPersonas:{
         paddingLeft: 5,
         height:35,
-        marginTop: 55, 
+        marginTop: 30, 
       },
 
       tacho:{
