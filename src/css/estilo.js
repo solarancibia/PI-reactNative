@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
         borderWidth: 1, 
         borderStyle: "solid", 
         borderColor:"#ffffff",
-        marginTop: 25, 
         height:40,
         width: 300,
         borderRadius:5,
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
       cargarPersonas:{
         paddingLeft: 5,
         height:35,
-        marginTop: 30, 
+        marginTop: 4, 
       },
 
       tacho:{
@@ -151,6 +150,16 @@ const styles = StyleSheet.create({
          padding: 7,
 
       },
+
+      imagenAcerca: {
+        height: 40,
+        width: 40,
+        alignSelf: 'center',
+        borderRadius: 50,
+        padding: 7,
+        marginTop:5,
+
+     },
 
       touchable: {
           marginTop: 70,
@@ -198,7 +207,8 @@ const styles = StyleSheet.create({
         top: 10
     },
     textModal: {
-        fontSize: 20,
+        fontSize: 15,
+        
     },
     modalContainer: {
         flex: 1,
@@ -207,15 +217,15 @@ const styles = StyleSheet.create({
     },
     modal: {
         width: "100%" ,
-        height: "70%",
+        height: "20%",
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "white",
         borderTopEndRadius: 20,
         shadowColor: "black",
         borderStyle: "solid",
-        borderWidth: 1,
-        borderColor: "grey",
+        borderWidth: 2,
+        borderColor: "#03BFCB",
         elevation: 10
     },
    
