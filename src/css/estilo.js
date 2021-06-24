@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
         borderWidth: 1, 
         borderStyle: "solid", 
         borderColor:"#ffffff",
-        marginTop: 25, 
         height:40,
         width: 300,
         borderRadius:5,
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
       cargarPersonas:{
         paddingLeft: 5,
         height:35,
-        marginTop: 30, 
+        marginTop: 4, 
       },
 
       tacho:{

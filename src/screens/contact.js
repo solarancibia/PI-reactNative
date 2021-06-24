@@ -152,21 +152,25 @@ componentWillUnmount(){
   return (
 
    <>
+    
   <SafeAreaView style={styles.topSafeArea} />
-            
+         
+  <StatusBar style="light"/>
+
             <SafeAreaView style={styles.container}>
-               
-               
-                <StatusBar barStyle="light-content" />
+            
+           
+                
               
            
 
   
-                <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0,}}>
+                <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0}}>
+                
 
                                   
                                         <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
-                                            <Text> <Entypo name="menu" size={24} color="white" /></Text>
+                                            <Text> <Entypo name="menu" size={30} color="white" /></Text>
                                             </TouchableOpacity>
                                   
                 </View>
