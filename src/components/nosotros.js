@@ -52,13 +52,15 @@ componentDidMount (){
                             {translateY: this.position}
                         ]
                     }  ]   } >
-                        <Image style={styles.imagenAcerca} source={{uri: this.props.item.image}} />
+                     <Image style={styles.imagenAcerca} source={{uri: this.props.item.image}} />
                         <Text style={{ color: "black", alignSelf: "center", fontSize: 20, marginTop:10}}> {this.props.item.nombre} {this.props.item.apellido}</Text>
                         <Text></Text>
                        
                         <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(this.props.item)}>
                           <Ionicons style= {styles.iconos} name="ios-eye-outline" size={24} color="black" />
                           </TouchableOpacity>
+
+
                         <Modal
                 visible= {this.state.showModal}
                 animationType= "slide"
@@ -72,9 +74,10 @@ componentDidMount (){
 
                 ? 
             <>
-              <Text style={styles.textModal}> Me llamo {this.state.itemModal.nombre} {this.state.itemModal.apellido}, </Text>
-              <Text style={styles.textModal}> tengo {this.state.itemModal.edad} años y nací el </Text>
-              <Text style={styles.textModal}>  {this.state.itemModal.date}  </Text>
+              <Text> {this.state.itemModal.nombre}  </Text>
+              <Text> {this.state.itemModal.apellido}  </Text>
+              <Text> {this.state.itemModal.edad}  </Text>
+              <Text> {this.state.itemModal.date}  </Text>
 
 
            </>
@@ -82,7 +85,7 @@ componentDidMount (){
                 : <Text>No hay nada</Text>
 
     }
-             <Text style= {styles.closeButton}  onPress= {() => this.setState({showModal: false})} >  <EvilIcons name="close" size={24} color="#03BFCB" /> </Text> 
+             <Text style= {styles.closeButton}  onPress= {() => this.setState({showModal: false})} >  <EvilIcons name="close" size={24} color="black" /> </Text> 
 
       </View>
             </View>
