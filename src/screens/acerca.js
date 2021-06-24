@@ -20,7 +20,7 @@ export  class Acerca extends Component{
                 id: 1,  },
                 {
                     nombre: "Sol",
-                    apellido: "Arancibia",
+                    apellido: "R. Arancibia",
                     edad: 20,
                     date: "16/01/2001",
                     id: 2,
@@ -50,7 +50,7 @@ export  class Acerca extends Component{
  
  <View style={{ backgroundColor: "#231E39", flex: 1 }}> 
 
- <Text style={{fontSize:40, color:"white"}}> ¿Quienes somos?</Text>
+ <Text style={{fontSize:30, color:"white", marginTop: 100, alignSelf:"center"}}>¿Quiénes somos?</Text>
  
    {
             this.state.nosotros.map((item, key) => {

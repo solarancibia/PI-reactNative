@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
+import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput, ActivityIndicator, Header } from 'react-native';
 import {Component} from "react"
 import {getData} from "../api/RandomUsers"
 import {Cards} from "../components/cards"
@@ -123,6 +123,7 @@ componentWillUnmount(){
 
                     
                    <View style={styles.cardcontainer}> 
+                 
                        
                        <Cards item ={item} />
 
@@ -150,7 +151,6 @@ componentWillUnmount(){
 
   return (
 
-
    <>
   <SafeAreaView style={styles.topSafeArea} />
             
@@ -171,13 +171,14 @@ componentWillUnmount(){
                                   
                 </View>
 
-               
+
                 <View style={styles.iconosjuntos}>
 
-                    <TextInput style= {styles.estiloInputPpal} keyboardType="number-pad"
+                    <TextInput style= {styles.estiloInputPpal} 
+                      keyboardType="number-pad"
                       placeholder="Ingresa la cantidad de personas"
                       placeholderTextColor={'white'}
-                    onChangeText={text=> this.setState({numeroDePersonas : text})}
+                      onChangeText={text=> this.setState({numeroDePersonas : text})}
                     /> 
                     <TouchableOpacity  style={styles.cargarPersonas} onPress={this.cargarPersonas.bind(this)}>
                        <Text> <MaterialCommunityIcons name="account-plus-outline" size={30} color="white" /> </Text>
@@ -198,12 +199,12 @@ componentWillUnmount(){
                             ? 
                               <View>
                             <ActivityIndicator
-                                        color= "blue"
+                                        color= "white"
                                         size={60}
                                        
                             />  
                                      
-                                      <Text> Cargando!</Text>
+                                      <Text style={styles.estiloTexto}> Cargando</Text>
                               </View>
                             
                            :  <FlatList

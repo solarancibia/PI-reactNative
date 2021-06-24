@@ -1,8 +1,6 @@
 import { StyleSheet } from 'react-native';
 import React from 'react';
 
-// import { useFonts, Montserrat_500 } from '@expo-google-fonts/inter';
-
 
 const styles = StyleSheet.create({
 
@@ -27,6 +25,7 @@ const styles = StyleSheet.create({
         borderRadius:5,
         backgroundColor: "transparent",
         padding: 10,
+        color: "#ffffff",
     },
 
     estiloInputPpal: {
@@ -39,6 +38,7 @@ const styles = StyleSheet.create({
         borderRadius:5,
         backgroundColor: "transparent",
         padding: 10,
+        color: "#ffffff",
     },
 
     estilocomment:{
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginBottom: 10,
         marginTop: 10,
-        zIndex: 5,
+        zIndex: 2,
         position: "relative",
     },
     
@@ -90,14 +90,12 @@ const styles = StyleSheet.create({
 
     estiloTextoButton:{
         color: "#ffffff",
-        // fontFamily: "Montserrat_500", 
         fontWeight: "500",
         alignSelf: "center",
     },
 
     estiloTextoButtonGhost:{
-        color: "#231E39",
-        // fontFamily: "Montserrat_500", 
+        color: "#231E39", 
         fontWeight: "500",
         alignSelf: "center",
     },
@@ -144,8 +142,8 @@ const styles = StyleSheet.create({
       },
 
       image: {
-          height: 100,
-          width: 100,
+         height: 100,
+         width: 100,
          alignSelf: 'center',
          borderWidth: 3,
          borderColor: "#03BFCB",
@@ -167,13 +165,11 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         marginTop: 10,
         minWidth: 250,
-        maxWidth:250,
-           
+        maxWidth: 250,
+        minHeight: 300,
+        maxHeight: 300,   
     },
 
-    containerPrueba:{
-        zIndex: 1, 
-    },
 
     nosotroscontainer: {
         backgroundColor: "#ffffff",
@@ -182,11 +178,11 @@ const styles = StyleSheet.create({
         textAlign: "center",
         position: 'relative',
         bottom: 500,                    
-         marginTop: 20,
-         alignSelf: "center",
-         minHeight: 100,
-         minWidth:200,
-         maxWidth: 200,
+        marginTop: 20,
+        alignSelf: "center",
+        minHeight: 100,
+        minWidth: 200,
+        maxWidth: 200,
         
        
       
