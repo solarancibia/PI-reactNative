@@ -84,6 +84,9 @@ componentWillUnmount(){
  
 
  cargarPersonas() {
+ 
+    
+ 
   let cantidadDeImportados = this.state.importados.length
   
     this.getDataFromApi()
@@ -157,7 +160,7 @@ componentWillUnmount(){
             <SafeAreaView style={styles.container}>
                
                
-                <StatusBar barStyle="light-content" />
+                <StatusBar style="light"  />
               
            
 

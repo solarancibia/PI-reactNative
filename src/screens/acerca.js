@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import {styles} from "../css/estilo"
-import { Button, StyleSheet, Text, Image, View, Animated, TouchableOpacity  } from 'react-native';
+import { Button, StyleSheet, Text, Image, View, Animated, TouchableOpacity, SafeAreaView } from 'react-native';
 import {Component} from "react"
 import { Easing } from 'react-native-reanimated';
 import { useFonts } from '@expo-google-fonts/dev';
+import { Entypo } from '@expo/vector-icons';
 import {Nosotros} from "../components/nosotros"
 export  class Acerca extends Component{
   
@@ -46,11 +47,29 @@ export  class Acerca extends Component{
 
  
     return (
- <>
+        <>
+        <SafeAreaView style={styles.topSafeArea} />
+                  
+                  <SafeAreaView style={styles.container}>
+                     
+                     
+                      <StatusBar style="light"  />
+                    
+                 
+      
+        
+                      <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0,}}>
+      
+                                        
+                                              <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
+                                                  <Text> <Entypo name="menu" size={24} color="white" /></Text>
+                                                  </TouchableOpacity>
+                                        
+                      </View>
  
- <View style={{ backgroundColor: "#231E39", flex: 1 }}> 
+ 
 
- <Text style={{fontSize:30, color:"white", marginTop: 100, alignSelf:"center"}}>¿Quiénes somos?</Text>
+ <Text style={{fontSize:30, color:"white", alignSelf:"center"}}>¿Quiénes somos?</Text>
  
    {
             this.state.nosotros.map((item, key) => {
@@ -71,8 +90,10 @@ export  class Acerca extends Component{
     }
 
     
-</View> 
-</>
+      
+</SafeAreaView>
+  </>
+
 
     )      
  }

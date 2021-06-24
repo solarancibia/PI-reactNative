@@ -1,7 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
+import { Entypo } from '@expo/vector-icons';
 import React from 'react';
-import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput } from 'react-native';
+import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput,SafeAreaView, } from 'react-native';
 import {Component} from "react"
+
 import {getData} from "../api/RandomUsers"
 import {styles} from "../css/estilo"
 import Asyncstorage from "@react-native-async-storage/async-storage"
@@ -133,6 +135,7 @@ async recuperarContacto(value){
         renderItem = ({item}) => {
             return (
                 
+              
                 
                 <View>
                         <View style={styles.cardcontainer}> 
@@ -163,7 +166,28 @@ async recuperarContacto(value){
 
   return (
 
-    <View style={styles.container}>
+
+    <>
+    <SafeAreaView style={styles.topSafeArea} />
+              
+              <SafeAreaView style={styles.container}>
+                 
+                 
+                  <StatusBar style="light"  />
+                
+             
+  
+    
+                  <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0,}}>
+  
+                                    
+                                          <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
+                                              <Text> <Entypo name="menu" size={24} color="white" /></Text>
+                                              </TouchableOpacity>
+                                    
+                  </View>
+
+    
         
 
          
@@ -182,8 +206,12 @@ async recuperarContacto(value){
                         keyExtractor={this.keyExtractor}
                  /> 
         </View>
-    </View>
+    
+         
+    </SafeAreaView>
+  </>
 
+  
 
   
   )

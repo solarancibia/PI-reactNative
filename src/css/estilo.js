@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
         shadowColor: "rgba(0,0,0,0.75)", 
         textAlign: "center",
         position: 'relative',
-        bottom: 500,                    
+      top: -600,                   
         marginTop: 20,
         alignSelf: "center",
         minHeight: 100,

@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, StyleSheet, Text, View, Alert, Image, FlatList, TouchableOpacity, TextInput, Modal, Animated } from 'react-native';
+import { Button, StyleSheet, Text, SafeAreaView,View, Alert, Image, FlatList, TouchableOpacity, TextInput, Modal, Animated } from 'react-native';
 import {Component} from "react"
 
 import {styles} from "../css/estilo"
@@ -11,6 +11,7 @@ import Asyncstorage from "@react-native-async-storage/async-storage"
 import { Ionicons } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 export  class ContactosImportados extends Component{
@@ -27,7 +28,7 @@ export  class ContactosImportados extends Component{
                 itemModal: null,
                 comentarios: " ",
                 toValue: 1,
-                toPosition: 180,
+                toPosition: 250,
               
 
 
@@ -43,10 +44,10 @@ export  class ContactosImportados extends Component{
             useNativeDriver: true,
     }) .start()
 
-    if(this.state.toPosition === 180 ) { 
-    this.setState({toPosition: this.state.toPosition - 180,})
+    if(this.state.toPosition === 250 ) { 
+    this.setState({toPosition: this.state.toPosition - 250,})
   } else {
-    this.setState({toPosition: this.state.toPosition + 180, })
+    this.setState({toPosition: this.state.toPosition + 250, })
   }
 }
 
@@ -131,7 +132,7 @@ showModal (item){
 
  searchFirstName(text) {
       
-            if(text.length !== 0) { 
+            if((text.length !== 0) && (isNaN(text))) { 
         const newData = this.state.misContactos.filter(item => {
           const itemData = item.name.first.toUpperCase();
           const textData = text.toUpperCase();
@@ -371,17 +372,36 @@ text: text
 
   return (
 
-   
-      
+    <>
+    <SafeAreaView style={styles.topSafeArea} />
+              
+              <SafeAreaView style={styles.container}>
+                 
+                 
+                  <StatusBar style="light"  />
+                
+             
+  
+    
+                  <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0,}}>
+  
+                                    
+                                          <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
+                                              <Text> <Entypo name="menu" size={24} color="white" /></Text>
+                                              </TouchableOpacity>
+                                    
+                  </View>
+  
 
-        <Animated.View style ={ [ styles.container , { 
-                      width: "100%",
+        <Animated.View style ={ { 
+                   
                     position: 'absolute',
-                   top: -180,
+                    top: -200,
+                    flex:1,
                     transform: [
                         {translateY: this.position}
                     ]
-                  } ] }  >
+                  }  }  >
             <TextInput  keyboardType="default"
                       placeholder="Filtrar por nombre"
                       placeholderTextColor={'white'}
@@ -400,28 +420,36 @@ text: text
                       style={styles.estiloInput}
                       onChangeText={(text) => this.searchAge(text) }
           /> 
+  </Animated.View>
 
-<TouchableOpacity style={{marginTop: 20}} onPress= {()=> this.topDown()}>
+ 
+<TouchableOpacity onPress= {()=> this.topDown()}>
 
 <Text> <AntDesign name="filter" size={24} color="white" /></Text>
 </TouchableOpacity>
              
              
-             
-                    <View style={{flex:1,}}> 
+<Animated.View style ={ { 
+                   marginTop: 10,
+                   flex:1,
+                 
+                   transform: [
+                       {translateY: this.position}
+                   ]
+                 } }  >
+                
               <FlatList
-
-                        style={{flex:2}}
-                       data= {this.state.misContactos}
+                         data= {this.state.misContactos}
                         renderItem={this.renderItem}
                         keyExtractor={this.keyExtractor}
+                        contentContainerStyle={{ paddingBottom: 20}}
                /> 
-  </View>
-      </Animated.View>
-     
-          
-          
 
+  </Animated.View>
+            
+           
+      </SafeAreaView>
+  </>
 
   
   )
