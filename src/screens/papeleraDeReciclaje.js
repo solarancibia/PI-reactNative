@@ -59,7 +59,10 @@ async removeTodos (key){
         ]
       );
         await Asyncstorage.removeItem(key)
-        
+        let resultado = [];
+        const jsonValue = JSON.stringify(resultado)
+        await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
+
 
          this.setState({contactosBorrados:  [] })
         } catch(error){
@@ -118,7 +121,14 @@ async getBorrados () {
 async recuperarContacto(value){
   try{
       console.log(value.comentarios);
-    
+    Alert.alert(
+      "Contacto recuperado",
+      "El elemento se ha mandado a -Mis Contactos- " ,
+      [
+        
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
 
       let resultado = this.state.contactosBorrados.filter ((item) => {
           return item.login.uuid !== value.login.uuid
