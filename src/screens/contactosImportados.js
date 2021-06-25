@@ -277,7 +277,7 @@ keyExtractor = (item ,idx) => idx.toString();
                                       onChangeText={(text) => this.searchLastName(text) }
                           /> 
                           <TextInput  keyboardType="default"
-                                      placeholder="Filtrar por edad"
+                                      placeholder="Filtrar por pais/ciudad"
                                       placeholderTextColor={'white'}
                                       style={styles.estiloInput}
                                       onChangeText={(text) => this.searchCity(text) }

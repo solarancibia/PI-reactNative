@@ -209,6 +209,9 @@ const styles = StyleSheet.create({
     },
     textModal: {
         fontSize: 15,
+        textAlign:"center",
+        paddingLeft:10,
+        paddingRight:10,
         
     },
     modalContainer: {
