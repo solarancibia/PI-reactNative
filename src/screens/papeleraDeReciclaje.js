@@ -59,10 +59,7 @@ async removeTodos (key){
         ]
       );
         await Asyncstorage.removeItem(key)
-        let resultado = [];
-        const jsonValue = JSON.stringify(resultado)
-        await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
-
+        
 
          this.setState({contactosBorrados:  [] })
         } catch(error){
