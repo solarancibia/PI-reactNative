@@ -20,7 +20,19 @@ class App extends Component {
   render() { 
   return (
       <NavigationContainer> 
-         <Drawer.Navigator> 
+         <Drawer.Navigator 
+              drawerStyle = {{
+                      backgroundColor: "#03BFCB",
+                    
+                      
+              }}
+              drawerContentOptions = {{
+                activeBackgroundColor: "teal",
+                activeTintColor: "white",
+                inactiveTintColor: "white"
+              }}
+         
+         > 
 
            <Drawer.Screen name= "Contactos" component={Contact} options= {{title: "Importar contactos"}}  />
            <Drawer.Screen name= "Contactos Importados" component={ContactosImportados} options= {{title: "Mis Contactos"}} />

@@ -50,7 +50,14 @@ async getMyContactsStorage () {
 
 async removeTodos (key){
     try{
-
+      Alert.alert(
+        "Contactos eliminados",
+        "Los elementos se han eliminado permanentemente" ,
+        [
+          
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
         await Asyncstorage.removeItem(key)
         let resultado = [];
         const jsonValue = JSON.stringify(resultado)
@@ -87,7 +94,14 @@ async getBorrados () {
  }
  async removeItem(value){
     try{
-
+      Alert.alert(
+        "Contacto eliminado",
+        "El elemento se ha eliminado permanentemente" ,
+        [
+          
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
         let resultado = this.state.contactosBorrados.filter ((item) => {
             return item.login.uuid !== value.login.uuid
           })
@@ -106,8 +120,9 @@ async getBorrados () {
 }
 async recuperarContacto(value){
   try{
+      console.log(value.comentarios);
+    
 
-  
       let resultado = this.state.contactosBorrados.filter ((item) => {
           return item.login.uuid !== value.login.uuid
         })
@@ -115,6 +130,7 @@ async recuperarContacto(value){
         this.setState({contactosBorrados:resultado})
 
         const borrados = JSON.stringify(resultado)
+        
         await Asyncstorage.setItem( "@misContactosBorrados" , borrados)
       
         this.state.misContactos.push(value)
@@ -138,21 +154,21 @@ async recuperarContacto(value){
               
                 
                 <View>
-                        <View style={styles.cardcontainer}> 
-                        <Image style={styles.image} source={{uri: item.picture.large}} />       
-                            <Text style={styles.estiloDatos}> {item.name.first} {item.name.last}</Text> 
-                            <Text style={styles.estiloDatos}> {item.email}</Text> 
-                            <Text style={styles.estiloDatos}> {item.dob.date.substring(0,10)} - {item.dob.age} años </Text>
-                          
-                           
-                            <TouchableOpacity onPress= {()=> this.removeItem(item)}>  
-                             <Ionicons style= {styles.iconos} name="md-trash-outline" size={24} color="black" />
-                            </TouchableOpacity>
+                    <View style={styles.cardcontainer}> 
+                        
+                            <Image style={styles.image} source={{uri: item.picture.large}} />       
+                                <Text style={styles.estiloDatos}> {item.name.first} {item.name.last}</Text> 
+                                <Text style={styles.estiloDatos}> {item.email}</Text> 
+                                <Text style={styles.estiloDatos}> {item.dob.date.substring(0,10)} - {item.dob.age} años </Text>
+                              
+                           <TouchableOpacity onPress= {()=> this.removeItem(item)}>  
+                                 <Ionicons style= {styles.iconos} name="md-trash-outline" size={24} color="black" />
+                             </TouchableOpacity>
                          
                            <TouchableOpacity style={styles.estiloButtonGhost} onPress= {()=> this.recuperarContacto(item)}>
                               <Text style= {styles.estiloTextoButtonGhost}> Recuperar contacto!</Text>
                           </TouchableOpacity>
-                          </View>
+                      </View>
                 </View>
             )
         }
@@ -167,48 +183,34 @@ async recuperarContacto(value){
   return (
 
 
-    <>
-    <SafeAreaView style={styles.topSafeArea} />
-              
-              <SafeAreaView style={styles.container}>
-                 
-                 
-                  <StatusBar style="light"  />
+   <>
+      <SafeAreaView style={styles.topSafeArea} />
+       <SafeAreaView style={styles.container}>
+          <StatusBar style="light"  />
                 
-             
-  
-    
                   <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0,}}>
-  
-                                    
-                                          <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
-                                              <Text> <Entypo name="menu" size={24} color="white" /></Text>
-                                              </TouchableOpacity>
+                        
+                         <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
+                                     <Text> <Entypo name="menu" size={24} color="white" /></Text>
+                        </TouchableOpacity>
                                     
                   </View>
 
-    
-        
-
-         
-               <TouchableOpacity style={styles.estiloButtonBorrado} onPress= {()=> this.removeTodos("@misContactosBorrados")}>
-                        <Text style= {styles.estiloTextoButton}> Borrar todos</Text>
-              </TouchableOpacity>
-
-
-
-   
+                  <TouchableOpacity style={styles.estiloButtonBorrado} onPress= {()=> this.removeTodos("@misContactosBorrados")}>
+                              <Text style= {styles.estiloTextoButton}> Borrar todos</Text>
+                    </TouchableOpacity>
           
-          <View style={{flex:1}}>   
-             <FlatList
-                        data= {this.state.contactosBorrados}
-                        renderItem={this.renderItem}
-                        keyExtractor={this.keyExtractor}
-                 /> 
-        </View>
-    
+                       <View style={{flex:1}}>   
+                                
+                                <FlatList
+                                            data= {this.state.contactosBorrados}
+                                            renderItem={this.renderItem}
+                                            keyExtractor={this.keyExtractor}
+                                    /> 
+                        </View>
+                  
          
-    </SafeAreaView>
+       </SafeAreaView>
   </>
 
   

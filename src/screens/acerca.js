@@ -7,6 +7,7 @@ import { Easing } from 'react-native-reanimated';
 import { useFonts } from '@expo-google-fonts/dev';
 import { Entypo } from '@expo/vector-icons';
 import {Nosotros} from "../components/nosotros"
+
 export  class Acerca extends Component{
   
     constructor(props){
@@ -38,10 +39,7 @@ export  class Acerca extends Component{
                 }
             
             
-            ]
-            
-    
-        
+            ]   
         }
       }
     
@@ -50,51 +48,37 @@ export  class Acerca extends Component{
 
  
     return (
-        <>
-        <SafeAreaView style={styles.topSafeArea} />
-                  
-                  <SafeAreaView style={styles.container}>
-                     
-                     
-                      <StatusBar style="light"  />
-                    
-                 
-      
+       
+       
+ <>
+     <SafeAreaView style={styles.topSafeArea} />
+         <SafeAreaView style={styles.container}>
+              <StatusBar style="light"  />
         
-                      <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0,}}>
-      
-                                        
-                                              <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
-                                                  <Text> <Entypo name="menu" size={24} color="white" /></Text>
-                                                  </TouchableOpacity>
-                                        
-                      </View>
+                          <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0,}}>
+                                
+                                    <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
+                                             <Text> <Entypo name="menu" size={24} color="white" /></Text>
+                                    </TouchableOpacity>
+                             </View>
  
  
 
- <Text style={{fontSize:30, color:"white", alignSelf:"center"}}>¿Quiénes somos?</Text>
+                        <Text style={{fontSize:30, color:"white", alignSelf:"center"}}>¿Quiénes somos?</Text>
  
-   {
-            this.state.nosotros.map((item, key) => {
+                                 {
+                                     this.state.nosotros.map((item, key) => {
                      
-                  
-             
-
-              return (        <Nosotros style={styles.estiloTexto} item={item} delay={800* item.id} key={key} /> 
-
-                )
-             
-
                 
-            
-
-     
-        })
-    }
+              return (  <Nosotros style={styles.estiloTexto} item={item} delay={800* item.id} key={key} /> )
+             
+                                                                            
+                                                                            })
+                                }
 
     
       
-</SafeAreaView>
+      </SafeAreaView>
   </>
 
 
@@ -103,44 +87,3 @@ export  class Acerca extends Component{
        
  }
 
- /* 
-  <View style={{alignSelf: "center"}}> 
-               
-                <Animated.View style ={{
-                        width: 100,
-                        height: 50,
-                       fontSize: 40,
-                        transform: [
-                            {translateY: this.position}
-                        ]
-                }} >
-
-                        <Text style={{ color: "white", fontSize: 20,}}> Luciano Marcogliese</Text>
-                       
-                </Animated.View>
-                
-                <Animated.View style ={{
-                        width: 100,
-                        height: 50,
-                       
-                        transform: [
-                            {translateY: this.position}
-                        ]
-                }} >
-
-                        <Text style={{ color: "white", fontSize: 20,}}>  Sol Arancibia</Text>
-                      
-                </Animated.View><Animated.View style ={{
-                        width: 100,
-                        height: 50,
-                      
-                        transform: [
-                            {translateY: this.position}
-                        ]
-                }} >
-
-                   
-                        <Text style={{ color: "white", fontSize: 20,}}>  Camille</Text>
-                </Animated.View>
-             
-                </View>       */

@@ -15,12 +15,12 @@ export  class DetalleDeContacto extends Component{
             return (
                 
 
-                <>
+           <>
                 <Image style={styles.image} source={{uri: this.props.item.picture.large} } />
                 <Text style={styles.estiloDatos}> {this.props.item.name.first} {this.props.item.name.last}</Text> 
                 <Text  style={styles.estiloDatos}>  {this.props.item.dob.date.substring(0,10)} - {this.props.item.dob.age} años </Text> 
                 <Text style={styles.estiloDatos}> {this.props.item.location.street.name} {this.props.item.location.street.number } </Text> 
-                 
+               <Text style={styles.estiloDatos} > {this.props.item.location.state} {this.props.item.location.city} {this.props.item.location.country} {this.props.item.location.postcode} </Text>
                 <Text  style={styles.estiloDatos}> {this.props.item.registered.date.substring(0,10)}</Text> 
                 <Text style={styles.estiloDatos} > {this.props.item.phone}</Text>
                 <Text style={styles.estiloDatos} > {this.props.item.comentarios}</Text> 
@@ -28,7 +28,7 @@ export  class DetalleDeContacto extends Component{
 
            </>
                           
-      //  <Text style={styles.estiloDatos} > {this.props.item.location.state} {this.props.item.location.city} {this.props.item.location.country} {this.props.item.location.postcode} </Text>
+  
                         
                    
             )

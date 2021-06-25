@@ -8,7 +8,7 @@ import {styles} from "../css/estilo"
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Asyncstorage from "@react-native-async-storage/async-storage"
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+
 import { Entypo } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -42,23 +42,20 @@ componentWillUnmount(){
         this.unsuscribe()
 }
 
- /* async storageObject (value) {
-   try{
-        
-        const jsonValue = JSON.stringify(value); 
-         await Asyncstorage.setItem( "@myObject" , jsonValue)
  
-   }catch (error){
-     console.log(error);
-   }
- }
- */
  
  async storageContact (value) {
     try{
      
           
-            alert("The selected contact has been imported")
+      Alert.alert(
+        "Contacto importado",
+        "El elemento se ha mandado a -Mis Contactos- " ,
+        [
+          
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      );
          
             this.state.importados.push(value)
           
@@ -85,8 +82,6 @@ componentWillUnmount(){
 
  cargarPersonas() {
  
-    
- 
   let cantidadDeImportados = this.state.importados.length
   
     this.getDataFromApi()
@@ -94,11 +89,18 @@ componentWillUnmount(){
     
  }
 
+
  async getDataFromApi (){
-     let personas = await getData(this.state.numeroDePersonas)
-     this.setState({contactos : personas, apiImportada: personas, activity: false})
-     
+    
+  let personas = await getData(this.state.numeroDePersonas)
+  .then((resultado) => {
+
+    let prevapi = [...this.state.contactos , ...resultado]
+    this.setState({activity:true})
+    this.setState({contactos : prevapi, apiImportada: personas, activity: false})
+    })
  }
+
 
  async getMyContactsStorage () {
   try{
@@ -120,25 +122,17 @@ componentWillUnmount(){
         keyExtractor = (item ,idx) => idx.toString();
         renderItem = ({item}) => {
             return (
-                
-             
-             
-
                     
-                   <View style={styles.cardcontainer}> 
+           <View style={styles.cardcontainer}> 
                  
-                       
-                       <Cards item ={item} />
-
-
-                       
+                   <Cards item ={item} />
                     
-                            <TouchableOpacity style={styles.estiloButtonGhost} onPress= {()=> this.storageContact(item)}>
+                      <TouchableOpacity style={styles.estiloButtonGhost} onPress= {()=> this.storageContact(item)}>
                             <Text style= {styles.estiloTextoButtonGhost}> Guardar contacto! </Text>
-                            </TouchableOpacity>
+                        </TouchableOpacity>
                         
                         
-                      </View>
+             </View>
                            
                            
             
@@ -156,54 +150,46 @@ componentWillUnmount(){
 
    <>
     
-  <SafeAreaView style={styles.topSafeArea} />
-         
-  <StatusBar style="light"/>
+       <SafeAreaView style={styles.topSafeArea} />
+         <StatusBar style="light"/>
 
-            <SafeAreaView style={styles.container}>
+              <SafeAreaView style={styles.container}>
                
-               
-             
-           
-
-  
-                <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0}}>
+                 <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0}}>
                 
-
-                                  
-                                        <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
-                                            <Text> <Entypo name="menu" size={30} color="white" /></Text>
-                                            </TouchableOpacity>
+                      <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
+                                    <Text> <Entypo name="menu" size={30} color="white" /></Text>
+                        </TouchableOpacity>
                                   
                 </View>
 
 
                 <View style={styles.iconosjuntos}>
 
-                    <TextInput style= {styles.estiloInputPpal} 
-                      keyboardType="number-pad"
-                      placeholder="Ingresa la cantidad de personas"
-                      placeholderTextColor={'white'}
-                      onChangeText={text=> this.setState({numeroDePersonas : text})}
-                    /> 
-                    <TouchableOpacity  style={styles.cargarPersonas} onPress={this.cargarPersonas.bind(this)}>
-                       <Text> <MaterialCommunityIcons name="account-plus-outline" size={30} color="white" /> </Text>
-                    </TouchableOpacity>
+                          <TextInput style= {styles.estiloInputPpal} 
+                            keyboardType="number-pad"
+                            placeholder="Ingresa la cantidad de personas"
+                            placeholderTextColor={'white'}
+                            onChangeText={text=> this.setState({numeroDePersonas : text})}
+                          /> 
+                          <TouchableOpacity  style={styles.cargarPersonas} onPress={this.cargarPersonas.bind(this)}>
+                                 <Text> <MaterialCommunityIcons name="account-plus-outline" size={30} color="white" /> </Text>
+                          </TouchableOpacity>
                  </View>
            
-                <TouchableOpacity disabled={true} style= {styles.estiloButtonGhost}>
-                    <Text style= {styles.estiloTextoButton}> <AntDesign name="contacts" size={20} color="teal" /> : {this.state.numeroDeImportados} </Text>
+            
+                    <TouchableOpacity disabled={true} style= {styles.estiloButtonGhost}>
+                          <Text style= {styles.estiloTextoButton}> <AntDesign name="contacts" size={20} color="teal" /> : {this.state.numeroDeImportados} </Text>
                     </TouchableOpacity>
                     
                     
                 
-                
-       
-              <View style= {{flex: 1}}>  
+                  <View style= {{flex: 1}}>  
+                          
                             { this.state.activity
 
                             ? 
-                              <View>
+                            <View>
                             <ActivityIndicator
                                         color= "white"
                                         size={60}
@@ -211,25 +197,21 @@ componentWillUnmount(){
                             />  
                                      
                                       <Text style={styles.estiloTexto}> Cargando</Text>
-                              </View>
+                           </View>
                             
-                           :  <FlatList
+                           :         <FlatList
                           
-                        data= {this.state.contactos}
-                        renderItem={this.renderItem}
-                        keyExtractor={this.keyExtractor}
-                        
-                        /> 
+                                    data= {this.state.contactos}
+                                    renderItem={this.renderItem}
+                                    keyExtractor={this.keyExtractor}
+                                    
+                                    /> 
                         
                           }
 
-              </View>
+                </View>
          
-                           
-             
-              
-                            
-              </SafeAreaView>
+      </SafeAreaView>
   </>
   )}
 }

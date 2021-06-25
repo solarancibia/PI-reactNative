@@ -44,52 +44,51 @@ componentDidMount (){
   
     
             return (
-  <>
-                    
-                    <Animated.View style ={ [ styles.nosotroscontainer, { 
-                    
-                        transform: [
-                            {translateY: this.position}
-                        ]
-                    }  ]   } >
-                     <Image style={styles.imagenAcerca} source={{uri: this.props.item.image}} />
-                        <Text style={{ color: "black", alignSelf: "center", fontSize: 20, marginTop:10}}> {this.props.item.nombre} {this.props.item.apellido}</Text>
-                        <Text></Text>
-                       
-                        <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(this.props.item)}>
-                          <Ionicons style= {styles.iconos} name="ios-eye-outline" size={24} color="black" />
-                          </TouchableOpacity>
+  
+  
+        <>
+           <Animated.View style ={ [ styles.nosotroscontainer, { 
+                                         transform: [
+                                        {translateY: this.position}
+                                         ]  
+                                }]} >
+                     
+                                <Image style={styles.imagenAcerca} source={{uri: this.props.item.image}} />
+                                 <Text style={{ color: "black", alignSelf: "center", fontSize: 20, marginTop:10}}> {this.props.item.nombre} {this.props.item.apellido}</Text>
+                                            
+                                <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(this.props.item)}>
+                                <Ionicons style= {styles.iconos} name="ios-eye-outline" size={24} color="black" />
+                                </TouchableOpacity>
 
 
-                        <Modal
-                visible= {this.state.showModal}
-                animationType= "slide"
-                transparent ={true}
-        >
+                            <Modal
+                                visible= {this.state.showModal}
+                                animationType= "slide"
+                                transparent ={true}
+                                 >
 
-      <View style= {styles.modalContainer}>
-           <View style= {styles.modal}>
+                                         <View style= {styles.modalContainer}>
+                                                   <View style= {styles.modal}>
 
-             {      this.state.itemModal
+                                                        {      this.state.itemModal
 
-                ? 
-            <>
-              <Text> {this.state.itemModal.nombre}  </Text>
-              <Text> {this.state.itemModal.apellido}  </Text>
-              <Text> {this.state.itemModal.edad}  </Text>
-              <Text> {this.state.itemModal.date}  </Text>
+                                                                ? 
+                                                        <>
+                                                        <Text style={styles.textModal}> Me llamo {this.state.itemModal.nombre} {this.state.itemModal.apellido}, 
+                                                        tengo {this.state.itemModal.edad} años y nací el {this.state.itemModal.date}  
 
+                                                        </Text>
+                                                        </>
+                                                
+                                                                : <Text>No hay nada</Text>
 
-           </>
-      
-                : <Text>No hay nada</Text>
+                                                         }
+                                                        
+                                                <Text style= {styles.closeButton}  onPress= {() => this.setState({showModal: false})} >  <EvilIcons name="close" size={24} color="black" /> </Text> 
 
-    }
-             <Text style= {styles.closeButton}  onPress= {() => this.setState({showModal: false})} >  <EvilIcons name="close" size={24} color="black" /> </Text> 
-
-      </View>
-            </View>
-                  </Modal>
+                                                </View>
+                                          </View>
+                              </Modal>
 
 
 
@@ -97,8 +96,7 @@ componentDidMount (){
 
 
                 </Animated.View>
-                     
-                </>
+          </>
                 
             )   
         

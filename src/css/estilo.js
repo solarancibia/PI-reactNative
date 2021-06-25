@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         padding: 10,
         color: "#ffffff",
+        marginTop:20
     },
 
     estilocomment:{
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
       cargarPersonas:{
         paddingLeft: 5,
         height:35,
-        marginTop: 4, 
+        marginTop: 25, 
       },
 
       tacho:{

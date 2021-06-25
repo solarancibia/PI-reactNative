@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, StyleSheet, Text, SafeAreaView,View, Alert, Image, FlatList, TouchableOpacity, TextInput, Modal, Animated } from 'react-native';
+import { Button, StyleSheet, Text, SafeAreaView,View, Alert, Image, FlatList, ScrollView, TouchableOpacity, TextInput, Modal, Animated } from 'react-native';
 import {Component} from "react"
 
 import {styles} from "../css/estilo"
@@ -24,8 +24,7 @@ export  class ContactosImportados extends Component{
                 contactosBorrados: [],
                 text: "",
                 contactosOriginal: [],
-                showModal: false,
-                itemModal: null,
+              
                 comentarios: " ",
                 toValue: 1,
                 toPosition: 250,
@@ -50,24 +49,6 @@ export  class ContactosImportados extends Component{
     this.setState({toPosition: this.state.toPosition + 250, })
   }
 }
-
-
-
-/*
-rotation= new Animated.Value(0);
-
-rotate = () => {
-  Animated.timing(this.rotation, {
-      toValue: this.state.toValue,
-      duration: 1000,
-      useNativeDriver: true,
-  }) .start()
-  this.setState({toValue: this.state.toValue + 1})
-}
-
-
-*/
-
 
   componentDidMount () {
     this.unsuscribe = this.props.navigation.addListener( "focus", () => {
@@ -106,7 +87,10 @@ showModal (item){
 }
 
   borrar = async (value)  => {
-    try {        alert("El contacto se mando a la papelera de reciclaje")
+    try {         
+      console.log(value.comentarios);
+    
+
           
             this.state.contactosBorrados.push(value)
            const borrados = JSON.stringify(this.state.contactosBorrados)
@@ -120,11 +104,7 @@ showModal (item){
           const jsonValue = JSON.stringify(resultado)
            await Asyncstorage.setItem( "@myContacts" , jsonValue)
           
-             
 
-  //  }catch (error){
-   //   console.log(error);
-  //  }
 }catch (error){
   console.log(error);
 }
@@ -132,7 +112,7 @@ showModal (item){
 
  searchFirstName(text) {
       
-            if((text.length !== 0) && (isNaN(text))) { 
+            if(text.length !== 0) { 
         const newData = this.state.misContactos.filter(item => {
           const itemData = item.name.first.toUpperCase();
           const textData = text.toUpperCase();
@@ -171,14 +151,15 @@ text: text
 }
 } 
 
-searchAge(text) {
+searchCity(text) {
       
   if(text.length !== 0) { 
 const newData = this.state.misContactos.filter(item => {
-
-const itemData = item.dob.age.toString()
-
-return itemData.indexOf(text) > -1
+const itemDataCity = item.location.city.toUpperCase();
+const itemDataCountry = item.location.country.toUpperCase();
+const textData = text.toUpperCase();
+const campo = itemDataCity+" "+itemDataCountry
+return campo.indexOf(textData) > -1
 });
 
 this.setState({
@@ -193,28 +174,7 @@ text: text
 }
 } 
 
-  async getObjectStorage () {
-   
-    try{
-
-     const value = await Asyncstorage.getItem("@myObject");
-     console.log(value);
-        
-     if(value !== null){
-     
-        const objeto_recuperado = JSON.parse(value);
-        this.setState({contactos: objeto_recuperado})
-     
-    } else {
-    
-        console.log("No existe nada");
-     }
-   } 
-   catch (error){
-     console.log(error);
-   }
- }
-  
+ 
  async getMyContactsStorage () {
     try{
       const value = await Asyncstorage.getItem("@myContacts");
@@ -232,31 +192,15 @@ text: text
 
   async storageBorrados (value) {
     try{
-      //  const id = value.login.uuid
-        
-
-       // if (this.state.contactosBorrados.map(x => x.login.uuid).indexOf(id)===-1) {
+  
             alert("El contacto se mando a la papelera de reciclaje")
             this.state.contactosBorrados.push(value)
      
           const jsonValue = JSON.stringify(this.state.contactosBorrados)
          
             await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
-       //   }
-         // else {
-            
-        //    alert("El contacto se removio de la papelera de reciclaje")
-            
-            
-          //  this.state.contactosBorrados.splice(this.state.contactosBorrados.indexOf(value.login.uuid),1)
-           
-            //const jsonValue = JSON.stringify(this.state.contactosBorrados)
-            //await Asyncstorage.setItem( "@misContactosBorrados" , jsonValue)
-         // }
-        
       
-             
-          
+            
   
     }catch (error){
       console.log(error);
@@ -265,9 +209,7 @@ text: text
 
     storageComentarios = async (value, comentarios) => {
     try{
-       
         
-    
    Object.assign(value, 
             {
                 comentarios: comentarios  });
@@ -281,92 +223,18 @@ text: text
     }
   }
  
-        keyExtractor = (item ,idx) => idx.toString();
-    
-        
-        renderItem = ({item}) => {
+   
+keyExtractor = (item ,idx) => idx.toString();
+       renderItem = ({item}) => {
 
               return ( 
                           <CardImportadas item= {item} pasarComentario={this.storageComentarios} pasarBorrar={this.borrar} />
 
                           )
-          /*
-          const rotA = this.rotation.interpolate({
-            inputRange: [0,1],
-            outputRange: ["0deg", "180deg"]
-        })
-        const rotB = this.rotation.interpolate({
-          inputRange: [0,1],
-          outputRange: ["180deg", "0deg"]
-        })
-        
-          return (
-                
-                
-         
-              <TouchableOpacity key={item.login.uuid} onPress= {this.rotate} >
-                  
-                       <View> 
-                            <Animated.View  style={[styles.cardcontainer, {
-                                  backfaceVisibility: "hidden",
-                                   transform: [
-                                    {  rotateX: rotA }  ]
-                                     }]  } > 
-                       
-                                         <Cards item ={item} />  
-                        
-                                          <TextInput  keyboardType="default"
-                                          placeholder="Ingrese algún comentario..."
-                                          style={styles.estilocomment}
-                                          numberOfLines={10}
-                                          multiline={true}
-                                          onChangeText={text=> this.setState({comentarios : text})}
-                                        /> 
-
-
-                                        <TouchableOpacity style= {styles.estiloButtonGhost} onPress= {()=> this.storageComentarios(item)}>
-                                              <Text style= {styles.estiloTextoButtonGhost}> Guardar comentario</Text>
-                                        </TouchableOpacity>
-                                          
-                                          <View>
-                                        { <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.showModal(item)}>
-                                        <Ionicons style= {styles.iconos} name="ios-eye-outline" size={24} color="black" />
-                                        </TouchableOpacity> 
-
-
-                                        <TouchableOpacity style={styles.botonesiconos} onPress= {()=> this.borrar(item)}>
-                                        <MaterialCommunityIcons style= {styles.iconos} name="recycle" size={24} color="teal" />
-                                        </TouchableOpacity>
-                                        </View>
-                                 </Animated.View>
-
-                                <Animated.View   style={ [styles.cardcontainer ,  {
-                                                position: "absolute",
-                                              backfaceVisibility: "hidden",
-                                              transform: [
-                                              {  rotateX: rotB }  ]
-                                        }   ]}  > 
-                            
-                                             <DetalleDeContacto item ={item} />                   
-
-                               </Animated.View>
-                      
-                       </View> 
-              
-                 </TouchableOpacity>  
-      
-
-               
-            )
-       
-       */
        
           }
 
        
-
-
-
  render() { 
 
 
@@ -375,80 +243,73 @@ text: text
     <>
     <SafeAreaView style={styles.topSafeArea} />
               
-              <SafeAreaView style={styles.container}>
-                 
-                 
-                  <StatusBar style="light"  />
+        <SafeAreaView style={styles.container}>
+              <StatusBar style="light"  />
                 
-             
-  
+                      <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0,}}>
+                            
+                              <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
+                                  <Text> <Entypo name="menu" size={24} color="white" /></Text>
+                              </TouchableOpacity>
+                                          
+                        </View>
     
-                  <View style={{height:30, width: "100%", backgroundColor: "#03BFCB", position: "absolute", top: 0,}}>
-  
-                                    
-                                          <TouchableOpacity onPress= { () => this.props.navigation.openDrawer()}>   
-                                              <Text> <Entypo name="menu" size={24} color="white" /></Text>
-                                              </TouchableOpacity>
-                                    
-                  </View>
-  
 
-        <Animated.View style ={ { 
-                   
-                    position: 'absolute',
-                    top: -200,
-                    flex:1,
-                    transform: [
-                        {translateY: this.position}
-                    ]
-                  }  }  >
-            <TextInput  keyboardType="default"
-                      placeholder="Filtrar por nombre"
-                      placeholderTextColor={'white'}
-                      style={styles.estiloInput}
-                      onChangeText={(text) => this.searchFirstName(text) }
-          /> 
-            <TextInput  keyboardType="default"
-                      placeholder="Filtrar por apellido"
-                      placeholderTextColor={'white'}
-                      style={styles.estiloInput}
-                      onChangeText={(text) => this.searchLastName(text) }
-          /> 
-           <TextInput  keyboardType="number-pad"
-                      placeholder="Filtrar por edad"
-                      placeholderTextColor={'white'}
-                      style={styles.estiloInput}
-                      onChangeText={(text) => this.searchAge(text) }
-          /> 
-  </Animated.View>
+                        <Animated.View style ={ { 
+                                  
+                                    position: 'absolute',
+                                    top: -200,
+                                    flex:1,
+                                    transform: [
+                                        {translateY: this.position}
+                                    ]
+                                  }  }  >
+                            <TextInput  keyboardType="default"
+                                      placeholder="Filtrar por nombre"
+                                      placeholderTextColor={'white'}
+                                      style={styles.estiloInput}
+                                      onChangeText={(text) => this.searchFirstName(text) }
+                          /> 
+                            <TextInput  keyboardType="default"
+                                      placeholder="Filtrar por apellido"
+                                      placeholderTextColor={'white'}
+                                      style={styles.estiloInput}
+                                      onChangeText={(text) => this.searchLastName(text) }
+                          /> 
+                          <TextInput  keyboardType="default"
+                                      placeholder="Filtrar por edad"
+                                      placeholderTextColor={'white'}
+                                      style={styles.estiloInput}
+                                      onChangeText={(text) => this.searchCity(text) }
+                          /> 
+                  </Animated.View>
 
  
-<TouchableOpacity onPress= {()=> this.topDown()}>
-
-<Text> <AntDesign name="filter" size={24} color="white" /></Text>
-</TouchableOpacity>
+                      <TouchableOpacity style={{marginTop:3}} onPress= {()=> this.topDown()}>
+                               <Text> <AntDesign name="filter" size={24} color="white" /></Text>
+                      </TouchableOpacity>
              
              
-<Animated.View style ={ { 
-                   marginTop: 10,
-                   flex:1,
-                 
-                   transform: [
-                       {translateY: this.position}
-                   ]
-                 } }  >
-                
-              <FlatList
-                         data= {this.state.misContactos}
-                        renderItem={this.renderItem}
-                        keyExtractor={this.keyExtractor}
-                        contentContainerStyle={{ paddingBottom: 20}}
-               /> 
+                          <Animated.View style ={ { 
+                                          marginTop: 10,
+                                          flex:1,
+                                        
+                                          transform: [
+                                              {translateY: this.position}
+                                          ]
+                                        } }  >
+                                    
+                                      <FlatList
+                                                data= {this.state.misContactos}
+                                                renderItem={this.renderItem}
+                                                keyExtractor={this.keyExtractor}
+                                              
+                                      /> 
 
-  </Animated.View>
+                          </Animated.View>
             
            
-      </SafeAreaView>
+          </SafeAreaView>
   </>
 
   
